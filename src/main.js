@@ -3,11 +3,12 @@
  */
 import React from "react";
 import ReactDOM from "react-dom"
-import App from "./App.jsx"
+import routes from "./router/index.jsx"
+
 
 console.log(11111111);
 
 ReactDOM.render(
-  <App />,
+  routes,
   document.getElementById("guarantee")
 );
