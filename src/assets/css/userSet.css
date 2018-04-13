@@ -1,0 +1,100 @@
+/*
+*用户自定义css样式
+*/
+body{
+  background-color: #f5f5f5;
+}
+.bg_blag{
+  background-color:#6c6c6c;
+}
+.foot_style{
+  line-height:50px;
+  color:#fff;
+}
+.head .head_info{
+  background-color: #eee;
+  color: #999;
+  line-height: 40px;
+  font-size: 12px;
+}
+.head .head_info a{
+  color:#999;
+}
+.head .head_info img{
+  margin-right: 10px;
+}
+.head .head_menu {
+  background-color: #fff;
+}
+.head .head_menu img{
+  margin-top: 22px;
+  margin-bottom: 22px;
+  max-width: 300px;
+}
+
+/*用户登录页面自定义样式*/
+.login_container{
+  margin-top:50px;
+  margin-bottom:50px;
+  background-color: #fff;
+  border:1px solid #eee;
+  height: 340px;
+}
+.login_form{
+  padding-left:25%;
+}
+.login_form .err_point{
+  line-height: 25px;
+  height:25px;
+  color: #d2252c;
+  margin-top:20px;
+  margin-bottom:0;
+}
+.login_form .err_point.hide{
+  display: none;
+}
+.login_form .err_point.show{
+  display: block;
+}
+.login_form label{
+  margin-top: 20px;
+  display: block;
+}
+.login_form label img{
+  border:1px solid #e5e5e5;
+  border-right:none;
+}
+.login_form .remember_password{
+  font-size: 14px;
+}
+.login_form .remember_password label{
+  display:inline-block ;
+  margin-right:30%;
+}
+.login_form .remember_password i{
+  font-style: normal;
+  margin-left: 5px;
+}
+.login_form .remember_password span{
+  color: #009ada;
+  cursor: pointer;
+}
+.login_form input[type="text"],.login_form input[type="password"]{
+  outline: none;
+  width:225px;
+  border:1px solid #e5e5e5;
+  border-left:none;
+  line-height: 43px;
+  height: 45px;
+  padding-left:10px;
+}
+.login_form input[type="checkbox"]{
+  outline: none;
+}
+.login_form .btn_group .btn{
+  background-color: #009ada;
+  width: 280px;
+  color: #fff;
+  height: 44px;
+  margin-top:20px;
+}

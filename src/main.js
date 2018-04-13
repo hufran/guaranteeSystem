@@ -4,11 +4,17 @@
 import React from "react";
 import ReactDOM from "react-dom"
 import routes from "./router/index.jsx"
+import {Provider} from "react-redux"
+import state from "./store"
+import "bootstrap/dist/css/bootstrap.min.css"
+import "./assets/css/userSet.css"
 
 
-console.log(11111111);
-
+console.log("main:",state.getState());
 ReactDOM.render(
-  routes,
+  <Provider store={state}>
+  {routes}
+  </Provider>,
   document.getElementById("guarantee")
 );
+

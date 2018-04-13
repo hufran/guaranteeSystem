@@ -60,10 +60,10 @@ module.exports = {
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       },
-      // {
-      //   test: /\.css$/,
-      //   loader: 'css-loader!style-loader?postcss-loader'
-      // },
+      /*{
+        test: /\.css$/,
+        loader: 'css-loader!style-loader?postcss-loader'
+      },*/
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         loader: 'file-loader'

@@ -47,10 +47,10 @@ exports.cssLoaders = function (options) {
     if (options.extract) {
       return ExtractTextPlugin.extract({
         use: loaders,
-        fallback: 'vue-style-loader'
+        fallback: 'react-style-loader'
       })
     } else {
-      return ['vue-style-loader'].concat(loaders)
+      return ['react-style-loader'].concat(loaders)
     }
   }
 
