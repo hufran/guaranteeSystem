@@ -7,7 +7,7 @@ export const PASSWORDMINLENGTH=8;
 export const PASSWORDMAXLENGTH=16;
 
 
-const regexValue={
+const RegexValue=Object.create({
   checkUser:(value="")=>{
     const result={flag:false,errType:null};
     if(value.length==0){
@@ -34,6 +34,6 @@ const regexValue={
     }
     return result;
   }
-}
+})
 
-export regexValue;
+export {RegexValue};

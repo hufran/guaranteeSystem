@@ -6,8 +6,11 @@ export const SETERRORCONTENT="SET_ERROR_CONTENT";
 export const SETUSERNAME="SET_USERNAME";
 export const SETPASSWORD="SET_PASSWORD";
 export const SETREMEMBER="SET_REMERMBER";
-export const LOGINSUCCESS="LOGIN_SUCCESS";
-
+export const LOGINREQUESTSUCCESS="LOGIN_REQUEST_SUCCESS";
+export const LOGINFETCHING="LOGIN_FETCHING";
+export const LOGINLASTUPDATE="LOGIN_LAST_UPDATE";
+export const CHANGELOGINSTATUS="CHANGELOGINSTATUS";
+export const CHANGEMODALSTATUS="CHANGEMODALSTATUS";
 
 //设置错误内容
 export const setError=(msg="",status=false)=>{
@@ -42,14 +45,48 @@ export const setRemeber=(remember=false)=>{
   }
 };
 
+//设置请求登录接口是否在抓取数据操作
+export const loginIsFetching=(status)=>{
+  return{
+    type:LOGINFETCHING,
+    status
+  }
+};
+
+//设置请求登录接口表示上一次更新时间
+export const loginLastUpdata=(time)=>{
+  return{
+    type:LOGINLASTUPDATE,
+    time
+  }
+};
+
 //登录请求操作成功
-export const loginSuccess=(status=0,msg='',response)=>{
+export const loginRequestSuccess=(status=0,msg='',response)=>{
   return {
-    type:LOGINSUCCESS,
+    type:LOGINREQUESTSUCCESS,
     status,
     msg,
     response
   }
 };
+
+//设置用户登录状态
+export const changeLoginStatus=(loginStatus)=>{
+  return {
+    type:CHANGELOGINSTATUS,
+    loginStatus
+  }
+};
+
+//设置状态窗口变化
+export const changeModalStatus=(msg="",status=false)=>{
+  return {
+    type:CHANGEMODALSTATUS,
+    msg,
+    status
+  }
+};
+
 
 

@@ -23,9 +23,9 @@ class Index extends React.Component{
     let {loginStatus,user,index,onShowPoint,onHidePoint,children}=this.props;
     return (
       <div className="col-lg-12 col-md-12">
-        {/*{
+        {
           loginStatus?index.point.text:(<Redirect from="/" to="/login"></Redirect>)
-        }*/}
+        }
 
         index yemian{children}
         <div className="modal fade {index.point&&index.point.status?'in':'out'}" id="myModal" >

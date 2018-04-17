@@ -1,7 +1,7 @@
 /*
  *login reducer功能 主要用来变更数据
  * */
-import {SETERRORCONTENT,SETUSERNAME,SETPASSWORD,SETREMEMBER,LOGINSUCCESS} from "./loginAction.jsx";
+import {SETERRORCONTENT,SETUSERNAME,SETPASSWORD,SETREMEMBER,LOGINREQUESTSUCCESS,LOGINFETCHING,LOGINLASTUPDATE,CHANGELOGINSTATUS,CHANGEMODALSTATUS} from "./loginAction.jsx";
 
 let initState={
   point:{
@@ -12,6 +12,10 @@ let initState={
     status:null,
     msg:null,
     response:null
+  },
+  modal:{
+    msg:"",
+    status:false
   },
   formValue:{
     userName:'',
@@ -26,9 +30,7 @@ let initState={
 };
 
 const Login=(state=initState,action)=>{
-  console.log("state3:",state);
   let newState={...state};
-  let keys=Object.keys(newState);
   switch (action.type){
     case SETERRORCONTENT:
       //设置错误信息
@@ -46,9 +48,23 @@ const Login=(state=initState,action)=>{
       //设置记住密码状态
       Object.assign(newState.formValue,{remember:action.remember});
       return newState;
-    case LOGINSUCCESS:
+    case LOGINREQUESTSUCCESS:
       //登录请求操作成功
       Object.assign(newState.point,{status:action.status,msg:action.msg,response:action.response});
+      return newState;
+    case CHANGELOGINSTATUS:
+      //修改登录状态
+      return newState;
+    case LOGINFETCHING:
+      //设置请求登录接口的抓取状态
+      Object.assign(newState.point,{isFetching:action.status});
+      return newState;
+    case LOGINLASTUPDATE:
+      //设置最后一次更新时间修改
+      Object.assign(newState.point,{lastUpdated:action.time});
+      return newState;
+    case CHANGEMODALSTATUS:
+      Object.assign(newState.modal,{msg:action.msg,status:action.status});
       return newState;
     default:
       return state;

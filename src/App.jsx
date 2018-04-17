@@ -13,7 +13,6 @@ class App extends React.Component{
 
 
   render(){
-    console.log("323deddd333");
     return (
       <div className="guarantee">
         <HeadComponent></HeadComponent>

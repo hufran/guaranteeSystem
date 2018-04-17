@@ -2,7 +2,7 @@
  *给组件分配数据以及方法
  * */
 import {connect} from "react-redux";
-import {loginOut} from "./headAction.jsx";
+import {changeLoginStatus,loginRequestSuccess,setUserName,setPass,setRemeber} from "../login/loginAction.jsx";
 import Head from "./head.jsx"
 
 //获取用户数据
@@ -25,7 +25,12 @@ const mapStateToProps=(state)=>{
 const mapDispatchToProps=(dispatch)=>{
   return {
     loginOut:()=>{
-      dispatch(loginOut());
+      dispatch(changeLoginStatus(false));
+      dispatch(loginRequestSuccess(null,null,null));
+      dispatch(setUserName());
+      dispatch(setPass());
+      dispatch(setRemeber());
+      dispatch(setRemeber());
     }
   }
 };

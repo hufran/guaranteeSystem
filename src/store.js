@@ -12,7 +12,7 @@ import Login from "./components/login/loginReducer.jsx"
 
 const reducers=combineReducers({
   Index,
-  Login
+  Login,
 });
 // thunkMiddleware 允许我们 dispatch() 函数
 const state=applyMiddleware(thunkMiddleware)(createStore)(reducers);
