@@ -10,7 +10,7 @@ let initState={
   }
 };
 
-const Index=(state={},action)=>{
+const IndexReducer=(state={},action)=>{
   let newValue={...state};
   switch (action.type){
     case SHOWPOINT:
@@ -32,4 +32,4 @@ const Index=(state={},action)=>{
   }
 };
 
-export default Index;
+export default IndexReducer;

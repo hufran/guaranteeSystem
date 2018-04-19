@@ -29,7 +29,7 @@ let initState={
   user:null
 };
 
-const Login=(state=initState,action)=>{
+const LoginReducer=(state=initState,action)=>{
   let newState={...state};
   switch (action.type){
     case SETERRORCONTENT:
@@ -54,6 +54,7 @@ const Login=(state=initState,action)=>{
       return newState;
     case CHANGELOGINSTATUS:
       //修改登录状态
+      Object.assign(newState.point,{loginStatus:action.loginStatus});
       return newState;
     case LOGINFETCHING:
       //设置请求登录接口的抓取状态
@@ -71,4 +72,4 @@ const Login=(state=initState,action)=>{
   }
 };
 
-export default Login;
+export default LoginReducer;

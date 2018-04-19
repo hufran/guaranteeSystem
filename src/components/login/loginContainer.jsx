@@ -27,7 +27,8 @@ const errorStatus={
 
 //登录状态
 const getLoginStatus=({point})=>{
-  return point.loginStatus;
+  const loginStatus=point.loginStatus;
+  return loginStatus;
 };
 
 //获取错误信息
@@ -46,11 +47,12 @@ const getModalValue=({modal})=>{
 };
 
 const mapStateToProps=(state)=>{
+  console.log("stateww:",state);
   return{
-    loginStatus:getLoginStatus(state.Login),
-    errorContent:getErrorContent(state.Login),
-    formValue:getFormValue(state.Login),
-    modalValue:getModalValue(state.Login)
+    loginStatus:getLoginStatus(state.LoginReducer),
+    errorContent:getErrorContent(state.LoginReducer),
+    formValue:getFormValue(state.LoginReducer),
+    modalValue:getModalValue(state.LoginReducer)
   }
 };
 
@@ -124,6 +126,7 @@ const mapDispatchToProps=(dispatch,ownerProps)=>{
       }catch(e){
         cancelBubble=true;
       }
+      dispatch(changeLoginStatus(true));
       const checkUserresult=RegexValue.checkUser(formValue.userName);
       if(checkUserresult.flag){
         dispatch(setError(errorStatus[checkUserresult.errType]));
@@ -153,7 +156,6 @@ const mapDispatchToProps=(dispatch,ownerProps)=>{
         dispatch(loginRequestSuccess(data.status,data.msg,data));
         if(data.status==0){
           dispatch(changeLoginStatus(true));
-          ownerProps.history.push('/');
         }else{
           dispatch(changeLoginStatus(false));
           dispatch(changeModalStatus(data.msg,true));

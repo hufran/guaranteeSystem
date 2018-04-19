@@ -17,8 +17,8 @@ const getLoginStatus=(Login)=>{
 
 const mapStateToProps=(state)=>{
   return{
-    loginStatus:getLoginStatus(state.Login),
-    user:getUser(state.Login)
+    loginStatus:getLoginStatus(state.LoginReducer),
+    user:getUser(state.LoginReducer)
   }
 };
 

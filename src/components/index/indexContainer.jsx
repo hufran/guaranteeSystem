@@ -7,7 +7,7 @@ import Index from "./index.jsx";
 
 const getUserInfo=({point:{loginStatus},user})=>{
   if(loginStatus){
-    return user;
+    return {...user};
   }else{
     return null;
   }
@@ -19,9 +19,9 @@ const getLoginStatus=({loginStatus})=>{
 
 const mapStateToProps=(state)=>{
   return{
-    loginStatus:getLoginStatus(state.Login.point),
-    user:getUserInfo(state.Login),
-    index:state.Index
+    loginStatus:getLoginStatus(state.LoginReducer.point),
+    user:getUserInfo(state.LoginReducer),
+    index:state.IndexReducer
   }
 };
 
