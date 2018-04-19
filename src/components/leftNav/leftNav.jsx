@@ -17,7 +17,7 @@ class LeftNav extends React.Component{
   render(){
     let {navList,addClick,addItemClick}=this.props;
     return(
-      <div className="collapse navbar-collapse show col-lg-3 col-md-3" id="example-navbar-collapse">
+      <div className="collapse navbar-collapse show col-lg-3 col-md-3 left-nav" id="example-navbar-collapse">
         <div className="">
           <button className="btn btn-warning btn-sm"><Link to="/recharge">充值</Link></button>
         </div>

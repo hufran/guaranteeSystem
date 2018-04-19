@@ -98,3 +98,10 @@ body{
   height: 44px;
   margin-top:20px;
 }
+
+/*左侧导航*/
+.left-nav{
+  font-size:14px;
+  background-color: #fff;
+  border-right: 1px solid #ccc;
+}
