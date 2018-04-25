@@ -23,7 +23,7 @@ class Head extends React.Component{
         <div className="head_info">
           <div className="container clearfix">
             <div className="float-left">
-              <span className="nav-phone"><img src="./static/images/phone.png" /></span>
+              <span className="nav-phone"><img src="/static/images/phone.png" /></span>
               <span className="nav-customer">客服电话：4001-718-718</span>
             </div>
             {

@@ -7,22 +7,26 @@ let initState=[
   {
     title:"我的账户",
     link:"/",
-    className:"active"
+    className:"active",
+    leftIconClass:"left-icon"
   },
   {
     title:"担保管理",
     link:"/",
-    className:""
+    className:"",
+    leftIconClass:"left-icon"
   },
   {
     title:"交易记录",
     link:"/",
-    className:""
+    className:"",
+    leftIconClass:"left-icon"
   },
   {
     title:"账户管理",
     link:"javascript:void(0);",
     className:"",
+    leftIconClass:"left-icon",
     childList:[
       {
         title:"公司信息",
