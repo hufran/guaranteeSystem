@@ -7,6 +7,7 @@ import thunkMiddleware from 'redux-thunk'
 import IndexReducer from "./components/index/indexReducer.jsx"
 import LoginReducer from "./components/login/loginReducer.jsx"
 import LeftNavReducer from "./components/leftNav/leftNavReducer.jsx"
+import GuaranteeReducer from "./components/guarantee/guaranteeReducer.jsx"
 
 
 
@@ -14,7 +15,8 @@ import LeftNavReducer from "./components/leftNav/leftNavReducer.jsx"
 const reducers=combineReducers({
   IndexReducer,
   LoginReducer,
-  LeftNavReducer
+  LeftNavReducer,
+  GuaranteeReducer
 });
 // thunkMiddleware 允许我们 dispatch() 函数
 const state=applyMiddleware(thunkMiddleware)(createStore)(reducers);

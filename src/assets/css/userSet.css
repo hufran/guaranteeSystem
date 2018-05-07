@@ -5,11 +5,20 @@ body{
   background-color: #f5f5f5;
   font-family: "微软雅黑";
 }
+ul li{
+  list-style-type: none;
+}
 .container{
   width:1200px;
 }
 .bg_blag{
   background-color:#6c6c6c;
+}
+.blue{
+  color: #009ada !important;
+}
+.gray{
+  color: rgb(153, 153, 153) !important;
 }
 .foot_style{
   line-height:50px;
@@ -116,6 +125,7 @@ body{
   padding-top: 30px;
   padding-bottom:50px;
   padding-left:0;
+  min-height:600px;
 }
 .left-nav .btn-group{
   margin: 0 auto 10px;
@@ -147,9 +157,303 @@ body{
   display: block;
   width:100%;
   height:100%;
+  color:rgb(153, 153, 153);
+  text-decoration: none;
+  clear: both;
+  overflow: hidden;
+}
+.left-nav li.active a{
+  color: #009ada;
 }
 .left-nav .left-icon{
-  width:10%;
-  display: inline-block;
+  width:50px;
+  height:50px;
+  background-position: center;
+}
+.left-nav .left-arrow{
+  height:50px;
+  width:16px;
+  margin-left:20px;
+  background-position: center;
+}
+.left-nav li ul{
+  -webkit-padding-start: 0;
+  -ms-padding-start: 0;
+  -moz-padding-start: 0;
+  padding-start: 0;
+}
+.left-nav li li{
+  list-style-type: none;
+  padding-left: 40px;
+}
+.left-nav li li a{
+  color:rgb(153, 153, 153);
+}
+.left-nav li li.active{
+  border-left:4px solid #009ada;
+  padding-left: 36px;
 }
 
+
+/*index首页样式*/
+.index-content .modal-width{
+  width:835px;
+  max-width: 835px;
+  margin-top: 210px;
+}
+.index-content .modal-width a{
+  display: inline-block;
+}
+.index-content .modal-width .modal-content{
+  display: block;
+  flex-direction:inherit;
+  background: none;
+  -webkit-border-radius:0;
+  -moz-border-radius:0;
+  border-radius:0;
+  border:0;
+
+}
+.home-topnav {
+height: 177px;
+border-bottom: 1px solid #ccc;
+margin-top: 30px;
+}
+.homeTopBox {
+border-bottom: 1px solid #ccc;
+padding-bottom: 40px;
+color: #999;
+}
+.home-avaliable {
+display: inline-block;
+vertical-align: middle;
+padding-left: 27px;
+}
+.home-bottomBar {
+display: inline-block;
+vertical-align: middle;
+margin-left: 30px;
+}
+.home-top-container {
+height: 80px;
+margin-top: 13px;
+}
+.home-tab-info {
+font-size: 18px;
+}
+.home-avaliable .home-tab-amount {
+font-family: 微软雅黑;
+font-size: 18px;
+}
+.home-avaliable .money, .home-avaliable .more-amount {
+color: #f58220;
+}
+.home-interest, .home-total, .home-yesterday {
+height: 100%;
+float: left;
+}
+.home-interest, .home-yesterday {
+border-right: 1px solid #ccc;
+}
+.home-top-container .home-tab-info {
+width: 100%;
+height: 20px;
+text-align: center;
+line-height: 20px;
+font-size: 14px;
+color: #999;
+}
+.home-top-container .home-tab-amount {
+width: 100%;
+height: 60px;
+text-align: center;
+line-height: 60px;
+font-size: 22px;
+}
+.home-recharge-btn a,.home-withdraw-btn a{
+line-height: 30px;
+display: block;
+text-decoration: none;
+}
+.home-recharge-btn a{
+color: #fff;
+}
+.home-withdraw-btn a{
+color: #f58220;
+}
+.home-withdraw-btn {
+padding:0;
+float: right;
+margin-right: 30px;
+margin-left: 20px;
+width: 80px;
+height: 30px;
+border-radius: 5px;
+text-align: center;
+line-height: 30px;
+font-size: 16px;
+border: 1px solid #f58220;
+background-color: #fff;
+}
+.home-withdraw-btn:hover{
+background-color: #f58220;
+}
+.home-withdraw-btn:hover a{
+color: #fff;
+}
+.home-recharge-btn {
+padding:0;
+float: right;
+width: 80px;
+height: 30px;
+border-radius: 5px;
+text-align: center;
+line-height: 30px;
+color: #fff;
+font-size: 16px;
+text-decoration: none;
+background-color: #f58220;
+border: 1px solid #f58220;
+}
+.home-recharge-btn:hover{
+background-color: #df6402;
+}
+#userinfo{
+padding-bottom:30px;
+background-color: #f5f5f5;
+}
+.userinfowra {
+width: 100%;
+height: 160px;
+background-repeat: no-repeat;
+background-position: 50%;
+background-color:#78dffe ;
+}
+.userinfowra .tx {
+margin-top:10px;
+width: 100px;
+height: 100px;
+background-repeat:no-repeat;
+background-position: 50%;
+background-color:#fff ;
+border-radius: 50%;
+margin-left: 25px;
+float: left;
+}
+.userinfowra .doCredit{
+float: left;
+padding-top: 25px;
+width: 500px;
+position: relative;
+overflow: hidden;
+}
+.userinfowra .doCredit li {
+float: left;
+margin-right: 3%;
+}
+.userinfowra .doCredit .info-tip {
+display: none;
+position: absolute;
+left: 0;
+top: 0;
+background-color: #000;
+color: #fff;
+line-height: 24px;
+padding: 0 5px;
+border-radius: 5px;
+opacity: .7;
+}
+.userinfowra .doCredit .rzpa {
+display: block;
+width: 50px;
+height: 50px;
+}
+.userinfowra .doCredit .cmo-active{
+background-repeat: no-repeat;
+background-position: 50%;
+}
+.userinfowra .user{
+margin-left:50px;
+line-height: 40px;
+overflow: hidden;
+}
+
+/*担保信息*/
+.guarantee{
+  margin-top:30px;
+}
+.guarantee .search-title{
+  line-height:30px;
+  padding-left:20px;
+  margin-bottom:30px;
+}
+.guarantee .search-title input{
+  margin-left:10px;
+  margin-right:20px;
+  width:270px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border:1px solid #CCC;
+  font-size:12px;
+  padding:0 10px;
+  outline: none;
+}
+.guarantee .search-title button{
+  color:#fff;
+  background-color: rgb(25, 158, 216);
+  outline: none;
+  border:0;
+  padding:0 20px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.guarantee .search-content{
+  width:100%;
+  line-height: 30px;
+  font-size:14px;
+  color:#797979;
+  padding:0;
+}
+.guarantee .search-content li{
+  display: table;
+  text-align: center;
+  width: 100%;
+}
+.guarantee .search-content li.title{
+  background-color: rgb(242, 242, 242);
+}
+.guarantee .search-content li.noData{
+  line-height: 200px;
+  font-size: 20px;
+}
+.guarantee .search-content span{
+  display: table-cell;
+  word-break: break-all;
+}
+.guarantee .search-content span.firstContent{
+  width:200px;
+}
+.guarantee .search-content span.secondContent{
+  width:160px;
+}
+.guarantee .search-content span.thirdContent{
+  width:50px;
+}
+.guarantee .search-content span.fourthContent{
+  width:120px;
+}
+.guarantee .search-content span.fifthContent{
+  width:100px;
+}
+.guarantee .search-content span.sixthContent{
+  width:95px;
+}
+.guarantee .search-content span.seventhContent{
+  width:80px;
+}
+.guarantee .search-content span.eighthContent{
+  width:50px;
+}

@@ -25,18 +25,18 @@ class LeftNav extends React.Component{
         {
           navList.map((item,index) => {
             return (
-              <li className={item.className} data-index={index} onClick={(event)=>{addClick(event)}} key={index}>
+              <li className={item.active?"active":""} data-index={index} onClick={(event)=>{addClick(event,{navList})}} key={index}>
                 {
                   !item.childList ? (
-                    <NavLink to={item.link}><span className={item.leftIconClass} style={{"backgroundImage":"url('/static/images/icon/upload.png')","backgroundRepeat":"no-repeat"}}></span>{item.title}<i className="left-arrow">&gt;</i></NavLink>
+                    <NavLink to={item.link}><span className="left-icon float-left" style={!item.active?item.leftIconStyle:item.leftIconActiveStyle}></span><span className="float-left">{item.title}</span><i className="left-arrow float-left" style={item.active?{"backgroundImage":"url('/static/images/toggle.png')","backgroundRepeat":"no-repeat"}:{"backgroundImage":"url('/static/images/toggle-up.png')","backgroundRepeat":"no-repeat"}}></i></NavLink>
                   ) : (
                     <div className="panel-group" id="accordion">
                       <div className="panel panel-default">
                         <div className="panel-heading">
                           <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                            <span className="left-icon"></span>
-                            {item.title}
-                            <i className="left-arrow">&gt;</i>
+                            <span className="left-icon float-left" style={!item.active?item.leftIconStyle:item.leftIconActiveStyle}></span>
+                            <span className="float-left">{item.title}</span>
+                            <i className="left-arrow float-left" style={item.active?{"backgroundImage":"url('/static/images/toggle.png')","backgroundRepeat":"no-repeat"}:{"backgroundImage":"url('/static/images/toggle-up.png')","backgroundRepeat":"no-repeat"}}></i>
                           </a>
                         </div>
                         <div id="collapseOne" className="panel-collapse collapse">
@@ -44,7 +44,7 @@ class LeftNav extends React.Component{
                             {
                               item.childList.map((child,i)=>{
                                 return(
-                                  <li className={child.className} data-child-index={i}  key={i} onClick={(event)=>{addItemClick(event)}}><a href="javascript:void(0);">{child.title}</a></li>
+                                  <li data-index={index} className={child.className} data-child-index={i}  key={i} onClick={(event)=>{addItemClick(event,{navList})}}><NavLink to={child.link} className={child.childClass}>{child.title}</NavLink></li>
                                 );
                               })
                             }

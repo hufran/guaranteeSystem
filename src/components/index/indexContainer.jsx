@@ -4,12 +4,14 @@
 import {showPoint,hidePoint} from "./indexAction.jsx";
 import {connect} from "react-redux";
 import Index from "./index.jsx";
+import bootstrap from "bootstrap"
+import $ from "jquery"
 
 const getUserInfo=({point:{loginStatus},user})=>{
   if(loginStatus){
     return {...user};
   }else{
-    return null;
+    return {};
   }
 
 };
@@ -25,13 +27,13 @@ const mapStateToProps=(state)=>{
   }
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return{
     onShowPoint:()=>{
-      dispatch(showPoint())
+      $("#myModal").modal("show");
     },
     onHidePoint:()=>{
-      dispatch(hidePoint())
+      $("#myModal").modal("show");
     }
   };
 };

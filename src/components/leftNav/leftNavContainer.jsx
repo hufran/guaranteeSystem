@@ -10,19 +10,58 @@ const getNavList=(navList)=>{
 };
 
 const mapStateToProps=(state)=>{
-  console.log("state:",state);
   return {
     navList:getNavList(state.LeftNavReducer)
   };
 };
+const getAppointTag=(target,appointTag)=>{
+  if(target&&appointTag){
+    const tagName=target.nodeName.toLowerCase();
+    if(tagName==appointTag.toLowerCase()){
+      return target;
+    }else{
+      return target=getAppointTag(target.parentNode,appointTag);
+    }
 
-const mapDispatchToProps = dispatch => {
+  }else{
+    return null;
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
   return {
-    addClick(event){
-      console.log("event:",event);
+    addClick({target},navList){
+      const nodeTarget=getAppointTag(target,"LI");
+      const index=Number.parseInt(nodeTarget.getAttribute("data-index"));
+      const newNavList=[...navList.navList];
+      for(let i=0,len=newNavList.length;i<len;i++){
+        if(i==index){
+          Object.assign(newNavList[i],{active:true});
+        }else{
+          Object.assign(newNavList[i],{active:false});
+        }
+      }
+      dispatch(changeNavStatus(newNavList));
+
     },
-    addItemClick(event){
-      console.log("child event:",event);
+    addItemClick({target,stopPropagation,cancelBubble},navList){
+      const nodeTarget=getAppointTag(target,"LI");
+      const index=Number.parseInt(nodeTarget.getAttribute("data-index"));
+      const childIndex=Number.parseInt(nodeTarget.getAttribute("data-child-index"));
+      const newNavList=[...navList.navList];
+
+      for(let i=0,len=newNavList.length;i<len;i++){
+        if(newNavList[i].childList&&index==i){
+          newNavList[i].childList.map((item,pos)=>{
+            if(pos==childIndex){
+              return item.className="active",item.childClass="blue";
+            }else{
+              return item.className="",item.childClass="gray";
+            }
+          });
+        }
+      }
+      dispatch(changeNavStatus(newNavList));
     }
   };
 };

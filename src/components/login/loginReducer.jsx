@@ -26,7 +26,7 @@ let initState={
     msg:'',
     status:false
   },
-  user:null
+  user:{}
 };
 
 const LoginReducer=(state=initState,action)=>{

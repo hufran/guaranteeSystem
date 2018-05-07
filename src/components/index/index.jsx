@@ -1,5 +1,5 @@
 import React from "react";
-import {Redirect} from "react-router-dom";
+import {Redirect,Link} from "react-router-dom";
 import PropTypes from 'prop-types';
 import LeftNavComponent from "../leftNav/leftNavContainer.jsx";
 
@@ -16,22 +16,92 @@ class Index extends React.Component{
 
   constructor(props){
     super(props);
-    console.log("store111:",this.props);
   }
 
+  componentDidMount(){
+    let {onShowPoint,user}=this.props;
+    if(!user.lccbAuth||user.lccbAuth.length==0){
+      onShowPoint();
+    }
+  }
   render(){
-    let {loginStatus,user,index,onShowPoint,onHidePoint,children}=this.props;
+    let {loginStatus,user,index,onShowPoint,children}=this.props;
     return (
-      <div className="col-lg-12 col-md-12 index-content clearfix">
+      <div className="col-lg-12 col-md-12 index-content clearfix pl-xl-0 pr-xl-0">
         {/*{
           loginStatus?index.point.text:(<Redirect from="/" to="/login"></Redirect>)
         }*/}
-
-        <LeftNavComponent></LeftNavComponent>
-        <div className="col-lg-10 col-md-10 float-left">
-          index yemian{children}
+        <div id="userinfo">
+          <div className="userinfowra" style={{"backgroundImage":'url("/static/images/topbg.png")'}}>
+            <div className="container">
+              <div className="info clearfix">
+                <div className="tx" style={{backgroundImage: "url('/static/images/txn.png')"}}></div>
+                <ul className="doCredit">
+                  <li className="rzpa cmo-active" style={{backgroundImage: "url('/static/images/phone.png')"}}></li>
+                  <li>
+                    <a href="/authentication" className="mouse-enter rzpa cid-active" rel="nofollow" style={user.lccbAuth&&user.lccbAuth.length>0?{backgroundImage: "url('/static/images/ID-active.png')"}:{backgroundImage: "url('/static/images/ID.png')"}}></a>
+                    <p className="info-tip" style={{top: "16px", left: "30px",display: "none"}}>点击查看银行存管</p>
+                  </li>
+                </ul>
+              </div>
+              <div className="user">
+                <div className="name">{user.name||"杜文亚"}</div>
+              </div>
+            </div>
+          </div>
         </div>
-
+        <div className="container">
+          <LeftNavComponent></LeftNavComponent>
+          <div className="col-lg-10 col-md-10 float-left">
+            <div className="home-topnav">
+              <div className="homeTopBox">
+                <div className="home-avaliable">
+                  <span className="home-tab-info">账户余额：</span>
+                  <span className="home-tab-amount">
+                    <span className="money">{user.avaAmount||"0.00"}</span> 元
+                  </span>
+                </div>
+                <div className="home-bottomBar">
+                  <button className="btn-sm home-withdraw-btn"><Link to="/recharge">充值</Link></button>
+                  <button className="btn-sm home-recharge-btn"><Link to="/withdraw">提现</Link></button>
+                </div>
+              </div>
+              <div className="home-top-container clearfix">
+                <div className="home-yesterday col-md-4">
+                  <div className="home-tab-info">累计担保金额</div>
+                  <div className="home-tab-amount">
+                    <span className="money">{user.yesterdayAmount||"0.00"}</span>&nbsp;元
+                  </div>
+                </div>
+                <div className="home-interest col-md-4">
+                  <div className="home-tab-info">当前偿还金额</div>
+                  <div className="home-tab-amount">
+                    <span className="money">{user.investInterestAmount||"0.00"}</span>&nbsp;元
+                  </div>
+                </div>
+                <div className="home-total col-md-4">
+                  <div className="home-tab-info">累代偿金额
+                    <span className="wh tips-top" data-original-title="总资产=可用余额+待收本息+冻结资金 1174273.94 = 0.00 + 1174273.94 + 0.00"></span>
+                  </div>
+                  <div className="home-tab-amount">
+                    <span className="money">{user.totalAmount||"0.00"}</span>&nbsp;元
+                  </div>
+                </div>
+              </div>
+            </div>
+            {children}
+          </div>
+          <div className="modal fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-width">
+              <div className="modal-content">
+                <img src="/static/images/true-name.png" />
+                <Link to="/authentication">
+                  <img src="/static/images/rightnow.png" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
