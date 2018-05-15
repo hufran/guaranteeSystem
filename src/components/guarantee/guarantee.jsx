@@ -1,15 +1,16 @@
 import React from "react";
-import {Redirect,Link} from "react-router-dom";
 import Modal from "../modal/modal.jsx"
 import PropTypes from 'prop-types';
 import LeftNavComponent from "../leftNav/leftNavContainer.jsx";
+import UserTitleComponent from "../userTitle/userTitleContainer.jsx"
+import PagerComponent from "../pager/pagerContainer.jsx"
 
 class Guarantee extends React.Component{
   static propTypes: {
     path: PropTypes.string,
     component: PropTypes.func,
+    guaranteeList:PropTypes.Array,
     loginStatus:PropTypes.bool.isRequired,
-    user:PropTypes.object.isRequired,
     changeNavList:PropTypes.func.isRequired
   }
 
@@ -21,35 +22,15 @@ class Guarantee extends React.Component{
     changeNavList(navList);
   }
   render(){
-    let {user,guaranteeList,searchValue,modalInfo,setSearchValue,submit,repay,sureOperate}=this.props;
+    let {guaranteeList,searchValue,modalInfo,pointMsg,setSearchValue,submit,repay,sureOperate,changePager}=this.props;
+
     return (
       <div className="col-lg-12 col-md-12 index-content clearfix pl-xl-0 pr-xl-0">
-        {/*{
-         loginStatus?index.point.text:(<Redirect from="/" to="/login"></Redirect>)
-         }*/}
-        <div id="userinfo">
-          <div className="userinfowra" style={{"backgroundImage":'url("/static/images/topbg.png")'}}>
-            <div className="container">
-              <div className="info clearfix">
-                <div className="tx" style={{backgroundImage: "url('/static/images/txn.png')"}}></div>
-                <ul className="doCredit">
-                  <li className="rzpa cmo-active" style={{backgroundImage: "url('/static/images/phone.png')"}}></li>
-                  <li>
-                    <a href="/authentication" className="mouse-enter rzpa cid-active" rel="nofollow" style={user.lccbAuth&&user.lccbAuth.length>0?{backgroundImage: "url('/static/images/ID-active.png')"}:{backgroundImage: "url('/static/images/ID.png')"}}></a>
-                    <p className="info-tip" style={{top: "16px", left: "30px",display: "none"}}>点击查看银行存管</p>
-                  </li>
-                </ul>
-              </div>
-              <div className="user">
-                <div className="name">{user.name||"杜文亚"}</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <UserTitleComponent></UserTitleComponent>
         <div className="container">
           <LeftNavComponent></LeftNavComponent>
           <div className="col-lg-10 col-md-10 float-left">
-            <div className="guarantee">
+            <div className="guarantee guarantee-info">
               <form noValidate onSubmit={(event)=>{submit(event,searchValue)}}>
                 <div className="search-title">
                   <label>关键字：</label><input type="search" onChange={(event)=>{setSearchValue(event)}} placeholder="姓名、身份证号、唯一编号" /><button>搜索</button>
@@ -63,7 +44,7 @@ class Guarantee extends React.Component{
                   </li>
                   {
                     guaranteeList&&guaranteeList.length>0?guaranteeList.map((item,index)=>{
-                      return (<li className="data-list">
+                      return (<li className="data-list" key={index}>
                         <span className="firstContent">{item.name}/{item.idNumber}</span>
                         <span className="secondContent">{item.loanTitle}/{item.loanId}</span>
                         <span className="thirdContent">{item.loanTerm}</span>
@@ -74,17 +55,17 @@ class Guarantee extends React.Component{
                         <span className="eighthContent" data-index={index}>{item.status?(<a href="#" onClick={(event)=>{repay(event,guaranteeList)}}>代偿</a>):""}</span>
                       </li>);
                     }):(
-                      <li className="noData">暂无担保数据!!!</li>
+                      <li className="noData">请输入检索内容！！！</li>
                     )
                   }
                 </ul>
               </form>
-
+              <PagerComponent pagerChangeEvent={changePager}></PagerComponent>
 
             </div>
           </div>
         </div>
-        <Modal modalBody="确定执行此操作？" modalBtn={{sure:sureOperate(modalInfo),cancelBtn:true}} ></Modal>
+        <Modal modalBody={pointMsg} modalBtn={{sure:sureOperate(modalInfo),cancelBtn:true}} ></Modal>
       </div>
     );
 

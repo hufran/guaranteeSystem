@@ -33,7 +33,40 @@ const RegexValue=Object.create({
       result.flag = true;
     }
     return result;
+  },
+  checkBankAccount:(value="")=>{
+    const result={flag:false,errType:null};
+    if(value.length==0){
+      Object.assign(result,{errType:"bankAccountRequire"});
+    }else if(!(/^\d{16,19}$/.test(value))){
+      Object.assign(result,{errType:"bankAccountError"});
+    }else{
+      result.flag = true;
+    }
+    return result;
+  },
+  checkLicense:(value="")=>{
+    const result={flag:false,errType:null};
+    if(value.length==0){
+      Object.assign(result,{errType:"licenseRequire"});
+    }else if(!(/^\w{15}|\w{18}$/.test(value))){
+      Object.assign(result,{errType:"licenseError"});
+    }else{
+      result.flag = true;
+    }
+    return result;
+  },
+  checkCompanyName:(value="")=>{
+    const result={flag:false,errType:null};
+    if(value.length==0){
+      Object.assign(result,{errType:"companyNameRequire"});
+    }else if(!(/^[\u4e00-\u9fa5]{1,19}$/.test(value))){
+      Object.assign(result,{errType:"companyNameError"});
+    }else{
+      result.flag = true;
+    }
+    return result;
   }
-})
+});
 
 export {RegexValue};

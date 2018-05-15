@@ -3,6 +3,8 @@
 * */
 import React from "react";
 import PropTypes from 'prop-types';
+import $ from "jquery"
+import bootstrap from "bootstrap"
 
 class Modal extends React.Component{
   static propTypes: {
@@ -31,12 +33,12 @@ class Modal extends React.Component{
             <div className="modal-footer text-center">
               {
                 sureBtn?(
-                  <button type="button" className="btn btn-default" data-dismiss="modal" onClick={(event)=>{if(typeof sure=="function"){sure()}}}>{sureText}</button>
+                  <button type="button" className="btn btn-default"  onClick={(event)=>{if(typeof sure=="function"){sure()};$('#myModal').modal("hide");}}>{sureText}</button>
                 ):''
               }
               {
                 cancelBtn?(
-                  <button type="button" className="btn btn-primary" onClick={(event)=>{if(typeof cancel=="function"){cancel()}}}>{cancelText}</button>
+                  <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={(event)=>{if(typeof cancel=="function"){cancel()}}}>{cancelText}</button>
                 ):''
               }
 

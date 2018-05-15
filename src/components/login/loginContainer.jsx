@@ -6,8 +6,8 @@ import Login from "./login.jsx";
 import {setError,setUserName,setPass,setRemeber,loginIsFetching,loginLastUpdata,loginRequestSuccess,changeLoginStatus,changeModalStatus} from "./loginAction.jsx"
 import Util from "../../assets/js/util.jsx";
 import UrlList from "../../assets/js/urlList.jsx";
-import $ from "jquery";
-import * as bootstrap from "bootstrap"
+import $ from "jquery"
+import bootstrap from "bootstrap"
 import {PASSWORDMINLENGTH,PASSWORDMAXLENGTH,USERNAMEMINLENGTH,RegexValue} from "../../assets/js/regex.jsx";
 
 

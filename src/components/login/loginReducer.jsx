@@ -51,6 +51,9 @@ const LoginReducer=(state=initState,action)=>{
     case LOGINREQUESTSUCCESS:
       //登录请求操作成功
       Object.assign(newState.point,{status:action.status,msg:action.msg,response:action.response});
+      if(action.response){
+        Object.assign(newState,{user:action.response.data});
+      }
       return newState;
     case CHANGELOGINSTATUS:
       //修改登录状态

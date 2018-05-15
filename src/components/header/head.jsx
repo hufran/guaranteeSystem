@@ -23,7 +23,7 @@ class Head extends React.Component{
         <div className="head_info">
           <div className="container clearfix">
             <div className="float-left">
-              <span className="nav-phone"><img src="/static/images/phone.png" /></span>
+              <span className="nav-phone"><img className="float-left" src="/static/images/tel-phone.png" /></span>
               <span className="nav-customer">客服电话：4001-718-718</span>
             </div>
             {
@@ -34,7 +34,7 @@ class Head extends React.Component{
               ):(
                 <div className="float-right">
                   <Link to="" >
-                    <img src="./static/images/user.png" />
+                    <img src="/static/images/user.png" />
                     user.name
                   </Link>
                   <span className="退出" onClick={()=>{loginOut()}}></span>
@@ -46,7 +46,7 @@ class Head extends React.Component{
         <div className="head_menu">
           <div className="container">
             <Link to="/">
-              <img className="" src="./static/images/navLogo.png" title="logo"/>
+              <img className="" src="/static/images/navLogo.png" title="logo"/>
             </Link>
           </div>
         </div>

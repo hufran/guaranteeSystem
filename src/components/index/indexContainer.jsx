@@ -4,8 +4,8 @@
 import {showPoint,hidePoint} from "./indexAction.jsx";
 import {connect} from "react-redux";
 import Index from "./index.jsx";
-import bootstrap from "bootstrap"
 import $ from "jquery"
+import bootstrap from "bootstrap"
 
 const getUserInfo=({point:{loginStatus},user})=>{
   if(loginStatus){

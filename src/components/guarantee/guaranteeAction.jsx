@@ -27,6 +27,9 @@ export const SETPOINTMAG="SET_POINT_MSG";
 //设置模态窗类型
 export const SETMODALTYPE="SET_MODAL_TYPE";
 
+//更新列表数据展示
+export const UPDATEGUARANTEEPAGERLIST="UPDATE_GUARANTEE_PAGER_LIST";
+
 //设置检索字段
 export const setSearchType=(field)=>{
   return{
@@ -51,6 +54,30 @@ export const updateStatus=(requestStatus)=>{
   }
 };
 
+//更新是否在抓取数据状态
+export const updateFetching=(fetching)=>{
+  return{
+    type:SETGUARANTEEFETCHING,
+    fetching
+  }
+};
+
+//更新表示数据是否过时
+export const guaranteeInvalidate=(invalidate)=>{
+  return {
+    type:SETGUARANTEEINVALIDATE,
+    invalidate
+  }
+};
+
+//表示上一次更新时间
+export const guaranteeLastUpdate=(lastUpdate)=>{
+  return {
+    type:SETGUARANTEELASTUPDATE,
+    lastUpdate
+  }
+};
+
 //设置提示信息
 export const setPointMsg=(pointMsg)=>{
  return{
@@ -64,5 +91,15 @@ export const setModalType=(modalType)=>{
   return {
     type:SETMODALTYPE,
     modalType
+  }
+};
+
+
+//更新列表数据展示
+export const updatePagerList=(listData)=>{
+
+  return {
+    type:UPDATEGUARANTEEPAGERLIST,
+    listData
   }
 };

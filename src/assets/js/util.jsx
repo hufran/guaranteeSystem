@@ -238,6 +238,33 @@ const Util=Object.create({
         }
       }
     })
+  },
+  formatTime(time,format="yyyy/MM/dd"){
+    if(!time||Object.prototype.toString.call(time)==="[Object Date]"){
+      console.error("Please provide date type data.");
+      return;
+    }
+    let year=[...(time.getFullYear()+"")].reverse();
+    let month=[...("0"+(time.getMonth()+1))].reverse();
+    let date=[...("0"+(time.getDate()))].reverse();
+    let yLen=0,MLen=0,dLen=0;
+    for(let str of format){
+      if(str==="y"){
+        yLen++;
+      }else if(str==="M"){
+        MLen++;
+      }else if(str==="d"){
+        dLen++;
+      }
+    }
+
+    year=year.slice(0,yLen).reverse().join("");
+    month=month.slice(0,MLen).reverse().join("");
+    date=date.slice(0,dLen).reverse().join("");
+    format=format.replace(/y+/,year);
+    format=format.replace(/M+/,month);
+    format=format.replace(/d+/,date);
+    return format;
   }
 
 });

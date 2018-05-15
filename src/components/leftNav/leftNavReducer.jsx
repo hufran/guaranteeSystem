@@ -32,7 +32,7 @@ let initState=[
   },
   {
     title:"交易记录",
-    link:"/",
+    link:"/trading",
     active:false,
     leftIconStyle:{
       "backgroundImage":"url('/static/images/icon-fund.png')",
@@ -45,7 +45,7 @@ let initState=[
   },
   {
     title:"账户管理",
-    link:"javascript:void(0);",
+    link:"/company/info",
     active:false,
     leftIconStyle:{
       "backgroundImage":"url('/static/images/icon-account.png')",
@@ -58,19 +58,19 @@ let initState=[
     childList:[
       {
         title:"公司信息",
-        link:"/",
+        link:"/company/info",
         className:"active",
         childClass:"blue"
       },
       {
         title:"银行存管",
-        link:"/",
+        link:"/company/authentication",
         className:"",
         childClass:"gray"
       },
       {
         title:"密码管理",
-        link:"/",
+        link:"/company/pass",
         className:"",
         childClass:"gray"
       }
