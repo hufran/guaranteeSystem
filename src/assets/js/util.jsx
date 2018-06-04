@@ -190,7 +190,7 @@ const Util=Object.create({
     if(url&&url.length==0){
       console.error("请传递请求地址!");
       return;
-    }else if(/\{(.*?)\}/ig.test(url)&&this.checkObjectIsEmpty(urlParam)){
+    }else if(/\{(.*?)\}/ig.test(url)&&Util.checkObjectIsEmpty(urlParam)){
       console.error("请传递api地址中所需要的参数！");
       return;
     }
@@ -207,7 +207,7 @@ const Util=Object.create({
     }
 
     $.ajax({
-      url:this.analyzetpl(url,urlParam),
+      url:Util.analyzetpl(url,urlParam),
       method:method,
       dataType:"json",
       data:data,
@@ -217,7 +217,7 @@ const Util=Object.create({
           dispatch(actionList.lastUpdated(new Date().getTime()));
         }
         if(Object.prototype.toString.call(success)==="[object Function]"){
-          success();
+          success(data);
         }
         if(Object.prototype.toString.call(actionList.isFetching)==="[object Function]"){
           //是否在抓取数据
@@ -229,6 +229,7 @@ const Util=Object.create({
           //表示上一次更新时间
           dispatch(actionList.lastUpdated(new Date().getTime()));
         }
+
         if(Object.prototype.toString.call(fail)==="[object Function]"){
           fail(err);
         }
@@ -265,6 +266,35 @@ const Util=Object.create({
     format=format.replace(/M+/,month);
     format=format.replace(/d+/,date);
     return format;
+  },
+  SetCookie(name,value,expires){
+    var argv = arguments;
+    //本例中length = 3
+    var argc = arguments.length;
+    var expires = (argc > 2) ? argv[2] : null;
+    var path = (argc > 3) ? argv[3] : null;
+    var domain = (argc > 4) ? argv[4] : null;
+    var secure = (argc > 5) ? argv[5] : false;
+    document.cookie = name + "=" + escape(value) + ((expires == null) ? "" : ("; expires=" + expires.toGMTString())) + ((path == null) ? "" : ("; path=" + path)) + ((domain == null) ? "" : ("; domain=" + domain)) + ((secure == true) ? "; secure" : "");
+  },
+  GetCookie(name){
+    var arg = name + "=";
+    var alen = arg.length;
+    var clen = document.cookie.length;
+    var i = 0;
+    while (i < clen) {
+      var j = i + alen;
+      //alert(j);
+      if (document.cookie.substring(i, j) == arg) return Util.getCookieVal(j);
+      i = document.cookie.indexOf(" ", i) + 1;
+      if (i == 0) break;
+    }
+    return null;
+  },
+  getCookieVal(offset){
+    var endstr = document.cookie.indexOf(";", offset);
+    if (endstr == -1) endstr = document.cookie.length;
+    return unescape(document.cookie.substring(offset, endstr));
   }
 
 });

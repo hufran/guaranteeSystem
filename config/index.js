@@ -21,6 +21,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
     secret:"guaranteeSys718bank",
+    frontSecret:"guaranteeSys123",
     sessionTimeOut:1800000,
     /**
      * Source Maps
@@ -74,6 +75,7 @@ module.exports = {
     assetsViews: 'dist/views',
     address:"",
     secret:"guaranteeSys718bank",
+    frontSecret:"guaranteeSys123",
     sessionTimeOut:1800000,
 
     // Various Production Server settings

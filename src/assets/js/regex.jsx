@@ -3,8 +3,9 @@
 * */
 export const USERNAMEMINLENGTH=11;
 export const USERNAMEMAXLENGTH=11;
-export const PASSWORDMINLENGTH=8;
+export const PASSWORDMINLENGTH=6;
 export const PASSWORDMAXLENGTH=16;
+export const UPDATEDATAMINTIME=600000;
 
 
 const RegexValue=Object.create({
@@ -25,9 +26,9 @@ const RegexValue=Object.create({
     const result={flag:false,errType:null};
     if(value.length==0){
       Object.assign(result,{errType:"passRequire"});
-    }else if(value.length<USERNAMEMINLENGTH||value.length>USERNAMEMAXLENGTH){
+    }else if(value.length<PASSWORDMINLENGTH||value.length>PASSWORDMAXLENGTH){
       Object.assign(result,{errType:"passLengthError"});
-    }else if (!(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/.test(value))) {
+    }else if (!(/^\w{6,16}$/.test(value))) {///^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/
       Object.assign(result,{errType:"passError"});
     } else {
       result.flag = true;

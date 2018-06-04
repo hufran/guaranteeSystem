@@ -9,7 +9,7 @@ let initState={
   businessLicense:"",
   bankCardNumber:"",
   bankCode:"",
-  bankList:[],
+  bankList:{},
   showErrorMsg:false
 };
 

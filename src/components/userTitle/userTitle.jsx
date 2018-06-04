@@ -1,4 +1,5 @@
 import React from "react";
+import {Redirect} from "react-router-dom";
 import PropTypes from 'prop-types';
 
 class UserTitle extends React.Component{
@@ -14,12 +15,12 @@ class UserTitle extends React.Component{
   }
 
   render(){
-    let {user}=this.props;
+    let {user,loginStatus}=this.props;
     return (
       <div id="userinfo">
-        {/*{
-         loginStatus?index.point.text:(<Redirect from="/" to="/login"></Redirect>)
-         }*/}
+        {
+         loginStatus?"":(<Redirect from="/" to="/login"></Redirect>)
+         }
         <div className="userinfowra" style={{"backgroundImage":'url("/static/images/topbg.png")'}}>
           <div className="container">
             <div className="info clearfix">

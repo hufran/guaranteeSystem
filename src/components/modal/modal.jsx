@@ -13,6 +13,9 @@ class Modal extends React.Component{
   constructor(props){
     super(props);
   }
+  componentDidMount(){
+    $("#myModal").modal("hide");
+  }
   render(){
     let {modalTitle="提示",modalBody,modalBtn:{sureBtn=true,sureText='确定',sure=null,cancelBtn=false,cancelText='取消',cancel=null}}=this.props;
     return(

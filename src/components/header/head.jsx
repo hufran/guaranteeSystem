@@ -35,7 +35,7 @@ class Head extends React.Component{
                 <div className="float-right">
                   <Link to="" >
                     <img src="/static/images/user.png" />
-                    user.name
+                    {user.name}
                   </Link>
                   <span className="退出" onClick={()=>{loginOut()}}></span>
                 </div>

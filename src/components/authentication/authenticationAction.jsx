@@ -24,6 +24,15 @@ export const SETBANKLIST="SET_BANK_LIST";
 //设置错误提示状态信息
 export const SETERRORMSGSTATUS="SET_ERROR_MSG_STATUS";
 
+//设置是否在抓取数据
+export const AUTHENTICATIONISFETCHING="AUTHENTICATION_IS_FETCHING";
+
+//设置上一次更新时间
+export const AUTHENTICATIONLASTUPDATE="AUTHENTICATION_LAST_UPDATE";
+
+//设置数据是否过时
+export const AUTHENTICATIONINVALIDATE="AUTHENTICATION_INVALIDATE";
+
 //设置公司信息方法
 export const setCompanyName=(value)=>{
   return {
@@ -80,4 +89,28 @@ export const setErrorStatus=(status)=>{
     status
   }
 }
+
+//设置是否在抓取数据
+export const authenticationIsFetching=(status)=>{
+  return {
+    type:AUTHENTICATIONISFETCHING,
+    status
+  }
+};
+
+//设置上一次更新时间
+export const authenticationLastUpdate=(time)=>{
+  return {
+    type:AUTHENTICATIONLASTUPDATE,
+    time
+  }
+};
+
+//设置数据是否过时
+export const authenticationInvalidate=(status)=>{
+  return {
+    type:AUTHENTICATIONINVALIDATE,
+    status
+  }
+};
 

@@ -135,7 +135,6 @@ const mapDispatchToProps = (dispatch) => {
       }else{
         return function(){
           //执行代偿操作
-          alert(2);
           const actionList={
             isFetching:updateFetching,
             lastUpdated:guaranteeLastUpdate

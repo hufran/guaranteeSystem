@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch) => {
     setLevel(user){
       if(user.mobile&&user.mobile.length==11){
         dispatch(setDataIntegrity(50));
-      }else if(user.lccbUserId&&user.lccbUserId.length>0){
+      }else if(user.lccbUserId&&user.lccbUserId!=0&&user.lccbUserId!=-1){
         dispatch(setDataIntegrity(100));
       }else{
         dispatch(setDataIntegrity(0));

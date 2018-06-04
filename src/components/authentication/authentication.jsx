@@ -19,13 +19,18 @@ class Authentication extends React.Component{
   }
 
   componentDidMount() {
-    const {changeNavList, navList} = this.props;
+    const {changeNavList, navList, lastUpdateTime, user, queryLccbId, queryBankList} = this.props;
     changeNavList(navList);
     $('#collapseOne').collapse('show');
+    queryBankList();
+    if(user.id){
+      queryLccbId(lastUpdateTime,user);
+
+    }
   }
 
   render() {
-    const {user,name,license,card,bankCode,pointMsg,showErrorMsg,setName,setLicense,setCard,getBankValue,submit}=this.props;
+    const {user,name,license,card,bankCode,bankList,pointMsg,showErrorMsg,setName,setLicense,setCard,getBankValue,submit}=this.props;
     return (
       <div className="col-lg-12 col-md-12 index-content clearfix pl-xl-0 pr-xl-0">
         <UserTitleComponent></UserTitleComponent>
@@ -72,6 +77,14 @@ class Authentication extends React.Component{
                       </span>):
                       (<select className="bankList" onChange={(event)=>{getBankValue(event,bankCode)}}>
                         <option>请选择</option>
+                        {
+                          bankList.map((item,index,ele)=>{
+                            console.log("item:"+item+" index:"+index+" ele:"+ele)
+                            return(
+                              <option></option>
+                            )
+                          })
+                        }
                       </select>)
                   }
                 </div>

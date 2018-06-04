@@ -5,11 +5,10 @@ import {connect} from "react-redux";
 import Login from "./login.jsx";
 import {setError,setUserName,setPass,setRemeber,loginIsFetching,loginLastUpdata,loginRequestSuccess,changeLoginStatus,changeModalStatus} from "./loginAction.jsx"
 import Util from "../../assets/js/util.jsx";
-import UrlList from "../../assets/js/urlList.jsx";
+import UrlList from "../../../router/util/urlHandler";
 import $ from "jquery"
 import bootstrap from "bootstrap"
 import {PASSWORDMINLENGTH,PASSWORDMAXLENGTH,USERNAMEMINLENGTH,RegexValue} from "../../assets/js/regex.jsx";
-
 
 let {apiUrl}=UrlList;
 
@@ -47,7 +46,7 @@ const getModalValue=({modal})=>{
 };
 
 const mapStateToProps=(state)=>{
-  console.log("stateww:",state);
+  console.log("state：",state);
   return{
     loginStatus:getLoginStatus(state.LoginReducer),
     errorContent:getErrorContent(state.LoginReducer),
@@ -126,7 +125,6 @@ const mapDispatchToProps=(dispatch,ownerProps)=>{
       }catch(e){
         cancelBubble=true;
       }
-      dispatch(changeLoginStatus(true));
       const checkUserresult=RegexValue.checkUser(formValue.userName);
       if(checkUserresult.flag){
         dispatch(setError(errorStatus[checkUserresult.errType]));
@@ -142,17 +140,21 @@ const mapDispatchToProps=(dispatch,ownerProps)=>{
         return;
       }
 
-      const sendParam={baseUrl:UrlList.baseUrl};
+      const sendParam={baseUrl:window.baseUrl};
       const data={
-        username:formValue.userName,
+        loginName:formValue.userName,
         password:formValue.passWord,
-        remember:formValue.remember
+        remember:formValue.remember?1:0,
+        source:null,
+        channel:null,
+        equipmentType:"PC"
       };
       const actionList={
         isFetching:loginIsFetching,
         lastUpdated:loginLastUpdata
       };
       const success=(data)=>{
+        data.data.userinfo=data.data.user;
         dispatch(loginRequestSuccess(data.status,data.msg,data));
         if(data.status==0){
           dispatch(changeLoginStatus(true));
@@ -167,7 +169,7 @@ const mapDispatchToProps=(dispatch,ownerProps)=>{
         $("#myModal").modal("show");
       };
 
-      //Util.sendRequest({method:"POST",url:apiUrl.login,urlParam:sendParam,data,actionList,success,fail});
+      Util.sendRequest({method:"POST",url:apiUrl.login,urlParam:sendParam,data,actionList,success,fail});
 
 
     }

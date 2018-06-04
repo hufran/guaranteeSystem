@@ -63,11 +63,11 @@ class CompanyInfo extends React.Component{
                   <tr>
                     <td><span className="glyphicon"><img src={user.lccbUserId&&user.lccbUserId.length>0?"/static/images/sure_btn.jpg":"/static/images/error_btn.jpg"} /></span> &nbsp;银行存管：</td>
                     <td>
-                      {user.lccbUserId&&user.lccbUserId.length>0?(<NavLink style={{"color":"#009ada"}} to="/company/authentication">查看详情</NavLink>):(<span className="status-no">未开通</span>)}
+                      {user.lccbUserId==-1||user.lccbUserId==null?(<span className="status-no">未开通</span>):user.lccbUserId==0?(<span className="status-no">未激活</span>):(<NavLink style={{"color":"#009ada"}} to="/company/authentication">查看详情</NavLink>)}
                     </td>
                     <td className="align-center">
                       {
-                        user.lccbUserId&&user.lccbUserId.length>0?(<span className="status">已开通</span>):(<NavLink to="/company/authentication" className="btn" rel="nofollow">去开通</NavLink>)
+                        user.lccbUserId==-1||user.lccbUserId==null?(<NavLink to="/company/authentication" className="btn" rel="nofollow">去开通</NavLink>):user.lccbUserId==0?(<NavLink to="/company/authentication" className="btn" rel="nofollow">去开通</NavLink>):(<span className="status">已开通</span>)
                       }
                     </td>
                   </tr>

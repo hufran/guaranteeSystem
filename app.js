@@ -16,7 +16,7 @@ if(process.env.NODE_ENV==="production"){
   app.set('views', path.join(__dirname, config.prod.assetsViews));
 }
 
-console.log();
+console.log("1111111111111111111");
 
 var useragent = require('express-useragent');
 app.use(useragent.express());
@@ -61,7 +61,7 @@ if(process.env.NODE_ENV==="production"){
   })*/
 }
 var ctrl=require("./router/controller");
-app.use('/rest',ctrl);
+app.use('/api/v2',ctrl);
 
 
 

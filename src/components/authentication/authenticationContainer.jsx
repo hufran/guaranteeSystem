@@ -1,11 +1,14 @@
 import {connect} from "react-redux";
 import {changeNavStatus} from "../leftNav/leftNavAction.jsx";
 import Authentication from "./authentication.jsx";
-import {setCompanyName,setBusinessLicense,setBankCardNumber,setBankCode,setAuthenticationPointMsg,setErrorStatus,setBankList} from "./authenticationAction.jsx"
+import {setCompanyName,setBusinessLicense,setBankCardNumber,setBankCode,setAuthenticationPointMsg,setErrorStatus,authenticationIsFetching,authenticationLastUpdate,setBankList} from "./authenticationAction.jsx"
+import {loginIsFetching,loginLastUpdata,updateLccb} from "../login/loginAction.jsx";
 import $ from "jquery"
 import bootstrap from "bootstrap"
+import Util from "../../assets/js/util.jsx";
 import {RegexValue} from "../../assets/js/regex.jsx"
-import UrlList from "../../assets/js/urlList.jsx";
+import UrlList from "../../../router/util/urlHandler";
+
 
 const {apiUrl}=UrlList;
 
@@ -33,15 +36,23 @@ const getUserInfo=({point:{loginStatus},user})=>{
   }
 };
 
+const getBankList=(authentication)=>{
+  const bankList={...authentication.bankList};
+  return bankList;
+};
+
 const mapStateToProps=(store)=>{
+  console.log("state:",store);
   return {
     navList:getNavList(store.LeftNavReducer),
     user:getUserInfo(store.LoginReducer),
+    lastUpdateTime:store.LoginReducer.point.lastUpdated,
     name:store.AuthenticationReducer.companyName,
     license:store.AuthenticationReducer.businessLicense,
     card:store.AuthenticationReducer.bankCardNumber,
     bankCode:store.AuthenticationReducer.bankCode,
     pointMsg:store.AuthenticationReducer.pointMsg,
+    bankList:getBankList(store.AuthenticationReducer),
     showErrorMsg:store.AuthenticationReducer.showErrorMsg
   }
 };
@@ -108,6 +119,43 @@ const mapDispatchToProps = (dispatch) => {
       }
       dispatch(setBankCode(target.value));
     },
+    queryLccbId:(lastUpdateTime,user)=>{
+      const time=new Date().getTime();
+      if(time-lastUpdateTime>UPDATEDATAMINTIME&&user&&user.id){
+        const sendParam={baseUrl:window.baseUrl,userId:user.id};
+        const data={};
+        const actionList={
+          isFetching:loginIsFetching,
+          lastUpdated:loginLastUpdata
+        };
+        const success=(data)=>{
+          dispatch(setBankList(data.data));
+        };
+        const fail=(err)=>{
+          dispatch();
+        };
+        Util.sendRequest({method:"POST",url:apiUrl.lccbId,urlParam:sendParam,data,actionList,success,fail});
+      }
+    },
+    queryBankList:()=>{
+      const modal=$("#myModal");
+      const sendParam={baseUrl:window.baseUrl};
+      const data={};
+      const actionList={
+        isFetching:null,
+        lastUpdated:null
+      };
+      const success=(data)=>{
+        if(data.status==0){
+          dispatch(updateLccb(data.data.lccbId,data.data.lccbAuth));
+        }
+      };
+      const fail=(err)=>{
+        dispatch(setAuthenticationPointMsg("获取银行列表操作异常，请稍后重试!"));
+        modal.modal("show");
+      };
+      Util.sendRequest({method:"POST",url:apiUrl.banks,urlParam:sendParam,data,actionList,success,fail});
+    },
     submit({target,stopPropagation,cancelBubble},user,name,license,card,bankCode){
       try {
         stopPropagation();
@@ -148,9 +196,7 @@ const mapDispatchToProps = (dispatch) => {
         console.log("user:",user);
         console.log("name:"+name+" license:"+license," card:"+card+" bankCode:"+bankCode);
         const actionList={};
-        const sendParam={
-          baseUrl:""
-        };
+        const sendParam={baseUrl:window.baseUrl};
         const success=(data)=>{
           if(data.status==0){
             window.document.forms[0].action=data.data;
@@ -165,7 +211,7 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(setAuthenticationPointMsg("网络异常，请稍后重试！"));
           dispatch(setErrorStatus(true));
         };
-        //Util.sendRequest({method:"POST",url:apiUrl.open,urlParam:sendParam,data:{searchValue:searchValue},actionList,success,fail});
+        Util.sendRequest({method:"POST",url:apiUrl.openAccount,urlParam:sendParam,data:{transtype:searchValue},actionList,success,fail});
       }else if(user.lccbUserId==0){
         //激活流程
         const actionList={};

@@ -62,8 +62,7 @@ ul li {
 
 /*用户登录页面自定义样式*/
 .login_container {
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin:50px auto;
   background-color: #fff;
   border: 1px solid #eee;
   height: 340px;
@@ -105,7 +104,7 @@ ul li {
 
 .login_form .remember_password label {
   display: inline-block;
-  margin-right: 30%;
+  margin-right: 15%;
 }
 
 .login_form .remember_password i {

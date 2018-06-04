@@ -11,14 +11,35 @@ import PassManagerComponent from './components/passManager/passManagerContainer.
 import RechargeComponent from './components/recharge/rechargeContainer.jsx'
 import WithdrawComponent from './components/withdraw/withdrawContainer.jsx'
 import LoginComponent from "./components/login/loginContainer.jsx"
+import Util from "./assets/js/util.jsx"
+import state from "./store"
+import {loginIsFetching,loginLastUpdata,loginRequestSuccess,changeLoginStatus} from "./components/login/loginAction.jsx"
+import UrlList from "../router/util/urlHandler";
+let {apiUrl}=UrlList;
 
 class App extends React.Component{
   constructor(props){
     super(props);
 
   }
-
-
+  componentWillMount(){
+    const sendParam={baseUrl:window.location.origin};
+    const data={};
+    const actionList={
+      isFetching:loginIsFetching,
+      lastUpdated:loginLastUpdata
+    };
+    const success=(data)=>{
+      state.dispatch(loginRequestSuccess(data.status,data.msg,data));
+      if(data.status==0){
+        state.dispatch(changeLoginStatus(true));
+      }else{
+        state.dispatch(changeLoginStatus(false));
+      }
+    };
+    const fail=(err)=>{};
+    Util.sendRequest({method:"POST",url:"{baseUrl}/api/v2/getSessionInfo",urlParam:sendParam,data,actionList,success,fail});
+  }
   render(){
     return (
       <div className="main">

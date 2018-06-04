@@ -9,8 +9,9 @@ export const SETREMEMBER="SET_REMERMBER";
 export const LOGINREQUESTSUCCESS="LOGIN_REQUEST_SUCCESS";
 export const LOGINFETCHING="LOGIN_FETCHING";
 export const LOGINLASTUPDATE="LOGIN_LAST_UPDATE";
-export const CHANGELOGINSTATUS="CHANGELOGINSTATUS";
-export const CHANGEMODALSTATUS="CHANGEMODALSTATUS";
+export const CHANGELOGINSTATUS="CHANGE_LOGIN_STATUS";
+export const CHANGEMODALSTATUS="CHANGE_MODAL_STATUS";
+export const UPDATELCCB="UPDATE_LCCB";
 
 //设置错误内容
 export const setError=(msg="",status=false)=>{
@@ -85,6 +86,15 @@ export const changeModalStatus=(msg="",status=false)=>{
     type:CHANGEMODALSTATUS,
     msg,
     status
+  }
+};
+
+//查询廊坊银行的用户id
+export const updateLccb=(lccbId,lccbAuth)=>{
+  return {
+    type:UPDATELCCB,
+    lccbId,
+    lccbAuth
   }
 };
 

@@ -1,7 +1,7 @@
 /*
  *login reducer功能 主要用来变更数据
  * */
-import {SETERRORCONTENT,SETUSERNAME,SETPASSWORD,SETREMEMBER,LOGINREQUESTSUCCESS,LOGINFETCHING,LOGINLASTUPDATE,CHANGELOGINSTATUS,CHANGEMODALSTATUS} from "./loginAction.jsx";
+import {SETERRORCONTENT,SETUSERNAME,SETPASSWORD,SETREMEMBER,LOGINREQUESTSUCCESS,LOGINFETCHING,LOGINLASTUPDATE,CHANGELOGINSTATUS,CHANGEMODALSTATUS,UPDATELCCB} from "./loginAction.jsx";
 
 let initState={
   point:{
@@ -52,7 +52,8 @@ const LoginReducer=(state=initState,action)=>{
       //登录请求操作成功
       Object.assign(newState.point,{status:action.status,msg:action.msg,response:action.response});
       if(action.response){
-        Object.assign(newState,{user:action.response.data});
+        console.log("response:",action.response.data);
+        Object.assign(newState,{user:action.response.data.userinfo});
       }
       return newState;
     case CHANGELOGINSTATUS:
@@ -69,6 +70,9 @@ const LoginReducer=(state=initState,action)=>{
       return newState;
     case CHANGEMODALSTATUS:
       Object.assign(newState.modal,{msg:action.msg,status:action.status});
+      return newState;
+    case UPDATELCCB:
+      Object.assign(newState.user,{lccbId:action.lccbId,lccbAuth:action.lccbAuth});
       return newState;
     default:
       return state;
