@@ -68,12 +68,12 @@ let initState=[
         className:"",
         childClass:"gray"
       },
-      {
+      /*{
         title:"密码管理",
         link:"/company/pass",
         className:"",
         childClass:"gray"
-      }
+      }*/
     ]
   }
 ];

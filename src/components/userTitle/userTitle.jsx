@@ -18,9 +18,9 @@ class UserTitle extends React.Component{
     let {user,loginStatus}=this.props;
     return (
       <div id="userinfo">
-        {
+        {/*{
          loginStatus?"":(<Redirect from="/" to="/login"></Redirect>)
-         }
+         }*/}
         <div className="userinfowra" style={{"backgroundImage":'url("/static/images/topbg.png")'}}>
           <div className="container">
             <div className="info clearfix">

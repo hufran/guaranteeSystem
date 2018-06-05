@@ -31,6 +31,20 @@ export const SETRECHARGEINVALIDATE="SET_RECHARGE_INVALIDATE";
 //设置数据上一次更新时间lastUpdated
 export const SETRECHARGELASTUPDATE="SET_RECHARGE_LAST_UPDATE";
 
+//设置tab数据的切换
+export const CHANGERECHARGETABINDEX="CHANGE_RECHARGE_TAB_INDEX";
+
+//设置corporation数据更新状态
+export const SETCORPORATIONRECHARGEFETCHING="SET_CORPORATION_RECHARGE_FETCHING";
+
+//设置corporation数据是否过时
+export const SETCORPORATIONRECHARGEINVALIDATE="SET_CORPORATION_RECHARGE_INVALIDATE";
+
+//设置corporation数据上一次更新时间lastUpdated
+export const SETCORPORATIONRECHARGELASTUPDATE="SET_CORPORATION_RECHARGE_LAST_UPDATE";
+
+//设置corporation数据更新
+export const SETCORPORATIONDATEUPDATE="SET_CORPORATION_DATE_UPDATE";
 
 //设置充值金额方法
 export const setRechargeMoney=(money)=>{
@@ -111,4 +125,46 @@ export const setRechargeUpdate=(lastUpdate)=>{
     lastUpdate
   }
 };
+
+//设置tab更新状态
+export const updateRechargeIndex=(index)=>{
+  return {
+    type:CHANGERECHARGETABINDEX,
+    index
+  }
+};
+
+//设置corporation数据更新状态
+export const setCorporationFetching=(fetching)=>{
+  return{
+    type:SETCORPORATIONRECHARGEFETCHING,
+    fetching
+  }
+};
+
+//设置corporation数据是否过时
+export const setCorporationInvalidate=(invalidate)=>{
+  return{
+    type:SETCORPORATIONRECHARGEINVALIDATE,
+    invalidate
+  }
+};
+
+//设置corporation数据上一次更新时间lastUpdated
+export const setCorporationLastUpdate=(lastUpdate)=>{
+  return{
+    type:SETCORPORATIONRECHARGELASTUPDATE,
+    lastUpdate
+  }
+};
+
+//设置corporation数据更新
+export const setCorporationDateUpdate=(data)=>{
+  return{
+    type:SETCORPORATIONDATEUPDATE,
+    data
+  }
+}
+
+
 

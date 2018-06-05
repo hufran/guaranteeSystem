@@ -3,6 +3,8 @@ import {Redirect,Link} from "react-router-dom";
 import PropTypes from 'prop-types';
 import LeftNavComponent from "../leftNav/leftNavContainer.jsx";
 import UserTitleComponent from "../userTitle/userTitleContainer.jsx"
+import $ from "jquery"
+import bootstrap from "bootstrap"
 
 class Index extends React.Component{
   static propTypes: {
@@ -17,15 +19,24 @@ class Index extends React.Component{
 
   constructor(props){
     super(props);
+    this.first=0;
   }
 
   componentDidMount(){
-    let {queryLccbId,user,lastUpdateTime,accountInfo,userfundNew}=this.props;
-    if(user.id){
+    let {changeNavList, navList}=this.props;
+    changeNavList(navList);
+    $('#collapseOne').collapse('hide');
+
+  }
+  componentWillReceiveProps(nextProps){
+    const {queryLccbId,user,lastUpdateTime,accountInfo,userfundNew}=nextProps;
+    if(this.first==0&&user.id){
       queryLccbId(lastUpdateTime,user);
       userfundNew(user,accountInfo);
+      this.first=1;
     }
   }
+
   componentDidUpdate(){
     let {queryLccbId,user,lastUpdateTime}=this.props;
     if(user.id){

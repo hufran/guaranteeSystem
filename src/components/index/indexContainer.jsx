@@ -8,10 +8,16 @@ import Index from "./index.jsx";
 import Util from "../../assets/js/util.jsx";
 import UrlList from "../../../router/util/urlHandler";
 import {loginIsFetching,loginLastUpdata,updateLccb} from "../login/loginAction.jsx"
+import {changeNavStatus} from "../leftNav/leftNavAction.jsx";
 import $ from "jquery"
 import bootstrap from "bootstrap"
 
 const {apiUrl}=UrlList;
+
+const getNavList=(leftNav)=>{
+  let navList=[...leftNav];
+  return navList;
+};
 
 const getUserInfo=({point:{loginStatus},user})=>{
   if(loginStatus){
@@ -32,6 +38,7 @@ const getAccount=(accountInfo)=>{
 
 const mapStateToProps=(state)=>{
   return{
+    navList:getNavList(state.LeftNavReducer),
     loginStatus:getLoginStatus(state.LoginReducer.point),
     lastUpdateTime:state.LoginReducer.point.lastUpdated,
     user:getUserInfo(state.LoginReducer),
@@ -41,6 +48,14 @@ const mapStateToProps=(state)=>{
 
 const mapDispatchToProps = (dispatch) => {
   return{
+    changeNavList(navList){
+      let newState=[...navList];
+      for(let item of newState){
+        item.active=false;
+      }
+      newState[0].active=true;
+      dispatch(changeNavStatus(newState));
+    },
     onHidePoint:()=>{
       $("#myModal").modal("hide");
     },

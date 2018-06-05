@@ -16,16 +16,22 @@ class Authentication extends React.Component{
 
   constructor(props) {
     super(props);
+    this.first=0;
   }
 
   componentDidMount() {
-    const {changeNavList, navList, lastUpdateTime, user, queryLccbId, queryBankList, queryCorporation} = this.props;
+    const {changeNavList, navList, queryBankList} = this.props;
     changeNavList(navList);
     $('#collapseOne').collapse('show');
     /*queryBankList();*/
-    if(user.id){
+
+  }
+  componentWillReceiveProps(nextProps){
+    const {lastUpdateTime,queryLccbId,queryCorporation,user}=nextProps;
+    if(this.first==0&&user.id){
       queryLccbId(lastUpdateTime,user);
       queryCorporation(user);
+      this.first=1;
     }
   }
 

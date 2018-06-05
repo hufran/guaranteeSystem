@@ -27,10 +27,19 @@ const getNavList=(leftNav)=>{
   return navList;
 };
 
+const getUserInfo=({point:{loginStatus},user})=>{
+  if(loginStatus){
+    return {...user};
+  }else{
+    return {};
+  }
+
+};
 
 const mapStateToProps=(store)=>{
   return{
     navList:getNavList(store.LeftNavReducer),
+    user:getUserInfo(store.LoginReducer),
     oldPass:store.PassManagerReducer.oldPass,
     newPass:store.PassManagerReducer.newPass,
     ensurePass:store.PassManagerReducer.ensurePass,
@@ -82,6 +91,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     changeImage(lastUpdate){
       const time=new Date().getTime();
+      console.log("time:"+time+" lastUpdate:"+lastUpdate);
       if(time-lastUpdate>10000){
         const actionList={
           isFetching:setPassManagerFetching,
@@ -104,7 +114,7 @@ const mapDispatchToProps = (dispatch) => {
         alert("您刷新太频繁，请稍后重试！");
       }
     },
-    submit(event,oldPass,newPass,ensurePass,validateCode){
+    submit(event,oldPass,newPass,ensurePass,validateCode,user){
       event.preventDefault();
       try {
         event.stopPropagation();
@@ -164,16 +174,22 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(setPassErrorShow(true));
         return;
       }
-
+      if(!user.id){
+        dispatch(setPassErrorPointMsg("请登录后重新操作！"));
+        dispatch(setErrorPos("validate"));
+        dispatch(setPassErrorShow(true));
+      }
       const actionList={
       };
       const sendParam={
-        baseUrl:window.baseUrl
+        baseUrl:window.baseUrl,
+        userId:user.id
       };
       dispatch(setPassErrorShow(false));
       const success=(data)=>{
         if(data.status==0){
           //退出登录
+
           dispatch(changeLoginStatus(false));
           dispatch(loginRequestSuccess(null,null,null));
         }else{

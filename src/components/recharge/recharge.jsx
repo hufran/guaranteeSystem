@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from 'prop-types';
 import LeftNavComponent from "../leftNav/leftNavContainer.jsx";
 import UserTitleComponent from "../userTitle/userTitleContainer.jsx"
+import {Redirect,Link} from "react-router-dom";
+import $ from "jquery"
 
 class Recharge extends React.Component {
   static propTypes: {
@@ -13,16 +15,50 @@ class Recharge extends React.Component {
 
   constructor(props) {
     super(props);
+    this.first=0
   }
 
   componentDidMount() {
-    const {changeNavList, navList, bankList} = this.props;
+    const {changeNavList, navList, bankList, queryCorporation, rechargeMoney, user, userfundNew, accountInfo} = this.props;
     changeNavList(navList);
     bankList();
+    $('#rechargeValue').val(rechargeMoney);
+  }
+
+  componentWillReceiveProps(nextProps){
+    const {userfundNew,accountInfo,queryCorporation,user}=nextProps;
+    if(this.first==0&&user.id){
+      queryCorporation(user);
+      userfundNew(user,accountInfo);
+      this.first=1;
+    }
+  }
+
+  componentWillUnmount(){
+    const {unmountRechargeMoney,unmountOperateTab} =this.props;
+    unmountRechargeMoney();
+    unmountOperateTab();
   }
 
   render() {
-    const {user, bankItemList, moreList, showMoreStatus, rechargeMoney, pointMsg, showErrorStatus, setRechargeMoney, checkList, showMore, submit} = this.props;
+    const {
+      user,
+      bankList,
+      bankItemList,
+      moreList,
+      showMoreStatus,
+      checkedIndex,
+      rechargeMoney,
+      pointMsg,
+      corporation,
+      accountInfo,
+      showErrorStatus,
+      setRechargeMoney,
+      operateTab,
+      checkList,
+      showMore,
+      submit
+    } = this.props;
     return (
       <div className="col-lg-12 col-md-12 index-content clearfix pl-xl-0 pr-xl-0">
         <UserTitleComponent></UserTitleComponent>
@@ -31,13 +67,13 @@ class Recharge extends React.Component {
           <div className="col-lg-10 col-md-10 float-left">
             <div className="recharge">
               <form action="" method="post"></form>
-              <form role="form" name="rechargeForm" action="" method="POST" autoComplete="off" onSubmit={(event) => {submit(event,rechargeMoney,bankItemList)}}>
+              <form noValidate={true} role="form" name="rechargeForm" action="" method="POST" autoComplete="off" onSubmit={(event) => {submit(event,rechargeMoney,bankItemList,checkedIndex,user)}}>
                 <div className="row">
                   <div className="">
                     <div className="rows">
                       <span className="tipss">账户余额</span>
                       <span className="ava">
-                        {user.depositAmount||0}.<span style={{"fontSize": "14px"}}>{user.dueInAmount||"00"}</span>
+                        {accountInfo.depositAmount||0}.<span style={{"fontSize": "14px"}}>{accountInfo.dueInAmount||"00"}</span>
                       </span>
                       <span className="tipss" style={{"color": "#f58220"}}>元</span>
                     </div>
@@ -59,12 +95,16 @@ class Recharge extends React.Component {
                 <div className="row">
                   <div className="methodwr" data-type="net">
                     <div style={{"display": "inline-block"}}>
-                      <input type="radio" id="paynet" name="payType" value="on" defaultChecked="true"/>
+                      <input type="radio" id="paynet" name="payType" data-index="0" value="on" defaultChecked="true" onFocus={(event)=>{operateTab(event,checkedIndex)}} />
                       <label htmlFor="paynet" style={{"paddingLeft": "5px"}}>网银充值</label>
+                    </div>
+                    <div style={{"display": "inline-block"}}>
+                      <input type="radio" id="Speedy" name="payType" data-index="1" value="on" onFocus={(event)=>{operateTab(event,checkedIndex)}} />
+                      <label htmlFor="Speedy" style={{"paddingLeft": "5px"}}>快捷充值</label>
                     </div>
                   </div>
                   <div className="space space-30"></div>
-                  <div className="bankwrap">
+                  <div id="paynetContainer" className="bankwrap" style={{"display":checkedIndex==0?"block":"none"}}>
                     {
                       bankItemList.length>0?bankItemList.map((item,index)=>{
                         return (
@@ -72,17 +112,27 @@ class Recharge extends React.Component {
                             <span className="check" style={{"backgroundImage":"url('/static/images/checka.png')","display":item.checked?"inline":"none"}}></span>
                           </span>
                         );
-                      }):"暂无数据，请刷新页面"
+                      }):"暂无银行数据"
                     }
                     {
                       showMoreStatus?"":(<span className="bankItem more" style={{"backgroundImage":"url('/static/images/more.png')"}} onClick={()=>{showMore(bankItemList,moreList)}}></span>)
                     }
 
                   </div>
+                  <div id="SpeedyContainer" className="bankwrap" style={{"display":checkedIndex==0?"none":"block"}}>
+                    {
+                      corporation.fundAccount&&corporation.fundAccount.account&&corporation.fundAccount.account.bank&&corporation.fundAccount.account.bank.length>0?
+                        (<span className={"bankItem "+corporation.fundAccount.account.bank+" currentBank"} style={{"backgroundImage":"url('/static/images/banks/"+corporation.fundAccount.account.bank+".png')"}} title={bankList[corporation.fundAccount.account.bank]} data-code={corporation.fundAccount.account.bank}>
+                          <span className="check" style={{"backgroundImage":"url('/static/images/checka.png')","display":"inline"}}></span>
+                        </span>)
+                        :(<span>您尚未绑定银行卡，<Link to='/company/authentication'>立即绑定</Link></span>)
+                    }
+
+                  </div>
                   <input type="hidden" name="transamt"/>
                   <input type="hidden" name="bankCode"/>
                 </div>
-                <button className="btn btn-warning btn-lg" disabled={bankItemList.length==0?true:false}>确认充值</button>
+                <button className="btn btn-warning btn-lg" disabled={(checkedIndex==0&&bankItemList.length==0)||(checkedIndex==1&&(!corporation.fundAccount||!corporation.fundAccount.account||!corporation.fundAccount.account.bank))?true:false}>确认充值</button>
               </form>
               <div className="line"></div>
               <div className="space space-20 recharge-info">

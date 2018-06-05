@@ -986,6 +986,10 @@ ul li {
   user-select: none;
 }
 
+.modify-password-wrapper .btn-get-validate img{
+  width:50px;
+}
+
 .modify-password-wrapper .btn-update {
   line-height: 28px;
   width: 200px;
@@ -1050,6 +1054,10 @@ ul li {
 .recharge .methodwr ,.withdraw .methodwr{
   color: #4a4a4a;
   font-size: 14px;
+  margin-bottom: 5%;
+}
+.recharge .methodwr div{
+  margin-right:5%;
 }
 .recharge input[type=checkbox],.recharge input[type=radio] {
   margin: 4px 0 0;
@@ -1112,6 +1120,9 @@ ul li {
   background:#f4fcff;
   padding:0 15px 15px;
   margin-bottom: 40px;
+}
+.recharge .bankwrap{
+  margin-bottom:10px;
 }
 .dec-li li {
   color: #999;

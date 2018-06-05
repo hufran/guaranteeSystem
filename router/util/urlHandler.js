@@ -16,7 +16,9 @@ let url={
     "openAccount":'{baseUrl}/api/v2/lccbweb/bindCard/{userId}',//POST 廊坊银行 web页面开户
     "lccbId":'{baseUrl}/api/v2/lccb/getLccbId/{userId}',//POST 获取廊坊银行开户状态
     "userfundNew":'{baseUrl}/api/v2/user/{userId}/userfundNew',//GET 获取用户信息
-    "recharge":'{baseUrl}/api/v2/lccbweb/deposit/{userId}',//POST 廊坊银行 web页面快捷充值
+    "onlineRecharge":'{baseUrl}/api/v2/lccbweb/onlineBankDeposit/{userId}',//POST 廊坊银行 web页面网银充值
+    "fasterRecharge":'{baseUrl}/api/v2/lccbweb/deposit/{userId}',//POST 廊坊银行 web页面快捷充值
+    "withdraw":'{baseUrl}/api/v2/lccbweb/withdraw/{userId}',//POST 廊坊银行 web页面提现
     "corporation":"{baseUrl}/api/v2/corporation/{userId}",//GET 获取企业基本信息
     "banks":"{baseUrl}/api/v2/lccb/banks",//GET 获取银行卡列表
     "userActivate":"{baseUrl}/api/v2/lccbweb/userActivate/{userId}",//POST 激活

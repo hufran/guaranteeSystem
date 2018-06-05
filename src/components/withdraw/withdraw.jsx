@@ -14,15 +14,31 @@ class Withdraw extends React.Component {
 
   constructor(props) {
     super(props);
+    this.first=0;
   }
 
   componentDidMount() {
     const {changeNavList, navList} = this.props;
     changeNavList(navList);
+
+  }
+
+  componentWillReceiveProps(nextProps){
+    const {userfundNew,accountInfo,user}=nextProps;
+    if(this.first==0&&user.id){
+      userfundNew(user,accountInfo);
+      this.first=1;
+    }
+  }
+
+  componentWillUnmount(){
+    const {unmount}=this.props;
+    unmount();
   }
 
   render() {
-    const {user,pointMsg,showErrorStatus,withdrawMoney,setWithdrawMoney,submit} = this.props;
+    const {user,pointMsg,showErrorStatus,withdrawMoney,accountInfo,setWithdrawMoney,submit} = this.props;
+
     return (
       <div className="col-lg-12 col-md-12 index-content clearfix pl-xl-0 pr-xl-0">
         <UserTitleComponent></UserTitleComponent>
@@ -31,27 +47,27 @@ class Withdraw extends React.Component {
           <div className="col-lg-10 col-md-10 float-left">
             <div className="withdraw">
               <div className="row">
-                <div className="methodwr" style={{"textIndent":"14px"}}>填写提现金额</div>
+                <div className="methodwr" style={{"textIndent":"14px"}}>提现操作</div>
                 <div className="rows">
                   <div className="col-md-12">
                     <form action="" method="post"></form>
-                    <form role="form" name="withdrawForm" method="POST" onSubmit={(event)=>{submit(event,withdrawMoney,user)}} target="_blank" autoComplete="off">
+                    <form role="form" noValidate={true} name="withdrawForm" method="POST" onSubmit={(event)=>{submit(event,withdrawMoney,user,accountInfo)}} target="_blank" autoComplete="off">
                       <div className="">
                         <div className="rows">
                           <span className="tipss">账户余额</span>
-                          <span className="ava">{user.depositAmount||0}.<span style={{"fontSize":"14px"}}>{user.dueInAmount||"00"}</span></span>
+                          <span className="ava">{accountInfo.depositAmount||0}.<span style={{"fontSize":"14px"}}>{accountInfo.dueInAmount||"00"}</span></span>
                           <span className="tipss" style={{"color":"#f58220"}}>元</span>
                         </div>
                         <div className="rows">
                           <span className="tipss">提现金额</span>
-                          <input type="number" name="amount" id="withdraw" autoComplete="off" onChange={(event)=>{setWithdrawMoney(event,user)}} placeholder="请输入提现金额" />
+                          <input type="number" name="amount" id="withdraw" autoComplete="off" onChange={(event)=>{setWithdrawMoney(event,accountInfo)}} placeholder="请输入提现金额" />
                           <span className="tipss" style={{"position":"relative","left":"5px","top":"10px"}}>元</span>
                           {
                             showErrorStatus?(<p className="help-block text-danger">{pointMsg}</p>):""
                           }
                         </div>
                       </div>
-                      <button type="submit" className="btn btn-warning btn-lg post-btn" >确认提现</button>
+                      <button type="submit" className="btn btn-warning btn-lg post-btn" disabled={parseFloat(accountInfo.availableAmount)>0?false:true}>确认提现</button>
                     </form>
                   </div>
                 </div>

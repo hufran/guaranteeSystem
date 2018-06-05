@@ -29,7 +29,7 @@ class PassManager extends React.Component {
 
   }
   render() {
-    const {oldPass,newPass,ensurePass,validateCode,pointMsg,errorPos,lastUpdate,showError,imgUrl,operaOldPass,operaNewPass,operaEnsurePass,operaValidate,changeImage,submit} = this.props;
+    const {user,oldPass,newPass,ensurePass,validateCode,pointMsg,errorPos,lastUpdate,showError,imgUrl,operaOldPass,operaNewPass,operaEnsurePass,operaValidate,changeImage,submit} = this.props;
     return (
       <div className="col-lg-12 col-md-12 index-content clearfix pl-xl-0 pr-xl-0">
         <UserTitleComponent></UserTitleComponent>
@@ -42,7 +42,7 @@ class PassManager extends React.Component {
               </div>
               <div className="modify-password-wrapper">
                 <div className="modify-password">
-                  <form action=""  onSubmit={(event)=>{submit(event,oldPass,newPass,ensurePass,validateCode);}} encType="application/x-www-form-urlencoded" method="post"
+                  <form action=""  onSubmit={(event)=>{submit(event,oldPass,newPass,ensurePass,validateCode,user);}} encType="application/x-www-form-urlencoded" method="post"
                         autoComplete="off">
                     <div className="row">
                       <span className="tipss">原密码</span>

@@ -29,7 +29,6 @@ router.all("*", formatReq(),function(req,res,next){
         }
       }
     }
-    console.log("global.baseUrl222222:",global.urlHandle.baseUrl);
     first=1;
   }
   next();
@@ -81,6 +80,21 @@ router.post("/lccbweb/userActivate/:userId",oauthAuthentication.user(),function(
   rest.sendRequest(req,res,next,{url:apiUrl.userActivate,urlParam:{baseUrl:urlHandle.baseUrl,userId:req.params.userId}});
 });
 
+//快捷充值
+router.post("/lccbweb/deposit/:userId",oauthAuthentication.user(),function(req,res,next){
+  rest.sendRequest(req,res,next,{url:apiUrl.fasterRecharge,urlParam:{baseUrl:urlHandle.baseUrl,userId:req.params.userId}})
+});
+
+//网银充值
+router.post("/lccbweb/onlineBankDeposit/:userId",oauthAuthentication.user(),function(req,res,next){
+  rest.sendRequest(req,res,next,{url:apiUrl.onlineRecharge,urlParam:{baseUrl:urlHandle.baseUrl,userId:req.params.userId}})
+});
+
+//提现
+router.post("/lccbweb/withdraw/:userId",oauthAuthentication.user(),function(req,res,next){
+  rest.sendRequest(req,res,next,{url:apiUrl.withdraw,urlParam:{baseUrl:urlHandle.baseUrl,userId:req.params.userId}});
+});
+
 //授权
 router.post("/lccbweb/userAuth/:userId",oauthAuthentication.user(),function(req,res,next){
   rest.sendRequest(req,res,next,{url:apiUrl.userAuth,urlParam:{baseUrl:urlHandle.baseUrl,userId:req.params.userId}});
@@ -92,10 +106,22 @@ router.post("/lccbweb/userAuthCancel/:userId",oauthAuthentication.user(),functio
 });
 
 //获取重置密码验证码
-router.get("/register/captcha",function(req,res,next){
+router.get("/register/captcha",oauthAuthentication.user(),function(req,res,next){
   var timestamp=new Date().getTime();
-  rest.sendRequest(req,res,next,{url:apiUrl.captcha,urlParam:{baseUrl:extraUrl,timestamp:timestamp},method:"GET"});
+  rest.sendRequest(req,res,next,{url:apiUrl.captcha,urlParam:{baseUrl:extraUrl.articleUrl,timestamp:timestamp},method:"GET"});
 });
+
+//验证验证码是否有效
+router.post("/register/captcha",oauthAuthentication.user(),function(req,res,next){
+  rest.sendRequest(req,res,next,{url:apiUrl.captcha,urlParam:{baseUrl:extraUrl.articleUrl,userId:req.params.userId}});
+});
+
+//重置密码操作
+router.get("/user/:userId/setPaymentPassword",oauthAuthentication.user(),function(req,res,next){
+  rest.sendRequest(req,res,next,{url:apiUrl.captcha,urlParam:{baseUrl:extraUrl.articleUrl,userId:req.params.userId}});
+});
+
+
 
 
 router.post("/userInfo/save",oauthAuthentication.pass(),function(req,res,next){

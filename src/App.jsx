@@ -51,7 +51,7 @@ class App extends React.Component{
           <Route path="/trading" exact component={tradingRecordComponent} />
           <Route path="/company/info" exact component={CompanyInfoComponent}/>
           <Route path="/company/authentication" exact component={AuthenticationComponent}/>
-          <Route path="/company/pass" exact component={PassManagerComponent}/>
+          {/*<Route path="/company/pass" exact component={PassManagerComponent}/>*/}
           <Route path="/recharge" exact component={RechargeComponent}/>
           <Route path="/withdraw" exact component={WithdrawComponent}/>
           <Route path="/login" exact component={LoginComponent} />
