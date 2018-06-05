@@ -15,6 +15,7 @@ class CompanyInfo extends React.Component{
 
   constructor(props) {
     super(props);
+    this.state={flag:false}
   }
 
   componentDidMount() {
@@ -23,7 +24,15 @@ class CompanyInfo extends React.Component{
     $('#collapseOne').collapse('show');
     setLevel(user);
   }
-
+  
+  componentWillReceiveProps(){
+    if(this.state.flag){return}
+    const {setLevel, user} = this.props;
+    if(user.id){
+      setLevel(user)
+      this.setState({flag:true})
+    }
+  }
   render() {
     const {user,level}=this.props;
     return (
@@ -39,7 +48,7 @@ class CompanyInfo extends React.Component{
               <div className="level-wrapper">
                 <span style={{"fontWeight":"bold"}}>安全等级</span>
                 <div className="safetyLevel">
-                  <div className="levelBar" style={{"height":level+"%"}}></div>
+                  <div className="levelBar" style={{"height":100-level+"%"}}></div>
                   <span className="level-info" style={{"color":"white"}}>{level>=0&&level<=50?"低":(level<=80?"中":"高")}</span>
                 </div>
                 <span style={{"fontSize":"18px","marginLeft":"100px"}}>您的信息资料完整度为 <span style={{"color":"#F58220","marginLeft":"20px"}}>{level}%</span></span>

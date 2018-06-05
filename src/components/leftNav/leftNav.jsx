@@ -10,7 +10,7 @@ class LeftNav extends React.Component{
 
   constructor(props){
     super(props);
-    console.log("left props:",this.props);
+    // console.log("left props:",this.props);
   }
 
   render(){

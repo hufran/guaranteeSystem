@@ -4,6 +4,10 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types"
+import {Redirect} from 'react-router-dom'
+import {loginIsFetching,loginLastUpdata,loginRequestSuccess,changeLoginStatus} from "../login/loginAction.jsx"
+import Util from "../../assets/js/util.jsx"
+import state from "../../store"
 
 class Head extends React.Component{
   static propTypes: {
@@ -15,9 +19,35 @@ class Head extends React.Component{
   constructor(props){
     super(props);
   }
+  componentWillMount(){
+    const sendParam={baseUrl:window.location.origin};
+    const data={};
+    const actionList={
+      isFetching:loginIsFetching,
+      lastUpdated:loginLastUpdata
+    };
+    const success=(data)=>{
+      state.dispatch(loginRequestSuccess(data.status,data.msg,data));
+      if(data.status==0){
+        state.dispatch(changeLoginStatus(true));
+      }else{
+        state.dispatch(changeLoginStatus(false));
+        if(this.props.location.pathname!=='/login'){
+          this.props.history.push('/login')
+        }
+      }
+    };
+    const fail=(err)=>{
+      if(this.props.location.pathname!=='/login'){
+          this.props.history.push('/login')
+        }
+    };
+    Util.sendRequest({method:"POST",url:"{baseUrl}/api/v2/getSessionInfo",urlParam:sendParam,data,actionList,success,fail});
+  }
 
   render(){
     let {loginStatus,user,loginOut}=this.props;
+    // console.log(this.props)
     return (
       <header className="head">
         <div className="head_info">

@@ -13,14 +13,10 @@ class UserTitle extends React.Component{
   constructor(props){
     super(props);
   }
-
   render(){
     let {user,loginStatus}=this.props;
     return (
       <div id="userinfo">
-        {/*{
-         loginStatus?"":(<Redirect from="/" to="/login"></Redirect>)
-         }*/}
         <div className="userinfowra" style={{"backgroundImage":'url("/static/images/topbg.png")'}}>
           <div className="container">
             <div className="info clearfix">
@@ -28,7 +24,10 @@ class UserTitle extends React.Component{
               <ul className="doCredit">
                 <li className="rzpa cmo-active" style={{backgroundImage: "url('/static/images/phone.png')"}}></li>
                 <li>
-                  <a href="/authentication" className="mouse-enter rzpa cid-active" rel="nofollow" style={user.lccbAuth&&user.lccbAuth.length>0?{backgroundImage: "url('/static/images/ID-active.png')"}:{backgroundImage: "url('/static/images/ID.png')"}}></a>
+                  <a className="mouse-enter rzpa cid-active" rel="nofollow" style={user.lccbAuth&&user.lccbAuth.length>0?{backgroundImage: "url('/static/images/ID-active.png')"}:{backgroundImage: "url('/static/images/ID.png')"}} onClick={(e)=>{
+                      e.preventDefault()
+                      this.props.history.push("/company/authentication")
+                  }}></a>
                   <p className="info-tip" style={{top: "16px", left: "30px",display: "none"}}>点击查看银行存管</p>
                 </li>
               </ul>
