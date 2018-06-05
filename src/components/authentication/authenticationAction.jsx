@@ -33,6 +33,9 @@ export const AUTHENTICATIONLASTUPDATE="AUTHENTICATION_LAST_UPDATE";
 //设置数据是否过时
 export const AUTHENTICATIONINVALIDATE="AUTHENTICATION_INVALIDATE";
 
+//设置更新企业数据corporation
+export const UPDATECORPORATION="UPDATE_CORPORATION";
+
 //设置公司信息方法
 export const setCompanyName=(value)=>{
   return {
@@ -87,6 +90,15 @@ export const setErrorStatus=(status)=>{
   return{
     type:SETERRORMSGSTATUS,
     status
+  }
+}
+
+//更新数据
+export const updateCorporation=(data)=>{
+  return{
+    type:UPDATECORPORATION,
+    data
+
   }
 }
 

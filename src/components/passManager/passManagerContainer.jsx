@@ -6,7 +6,7 @@ import $ from "jquery"
 import bootstrap from "bootstrap"
 import {RegexValue} from "../../assets/js/regex.jsx"
 import Util from "../../assets/js/util.jsx";
-import UrlList from "../../assets/js/urlList.jsx";
+import UrlList from "../../../router/util/urlHandler";
 import {
   setOldPass,
   setNewPass,
@@ -38,7 +38,8 @@ const mapStateToProps=(store)=>{
     pointMsg:store.PassManagerReducer.pointMsg,
     errorPos:store.PassManagerReducer.errorPos,
     showError:store.PassManagerReducer.showError,
-    imgUrl:store.PassManagerReducer.imgUrl
+    imgUrl:store.PassManagerReducer.imgUrl,
+    lastUpdate:store.PassManagerReducer.lastUpdated,
   }
 };
 
@@ -76,31 +77,32 @@ const mapDispatchToProps = (dispatch) => {
       const value=target.value;
       dispatch(setValidateCode(value));
     },
-    changeImage(){
-      const actionList={
-        isFetching:setPassManagerFetching,
-        lastUpdated:setPassManagerLastUpdated
-      };
-      const sendParam={
-        baseUrl:""
-      };
-      dispatch(setPassErrorShow(false));
-      const success=(data)=>{
-        if(data.status==0){
-          dispatch(setImageUrl(data.data));
-        }else{
-          dispatch(setPassErrorPointMsg(data.msg));
+    unmountLastTime(){
+      dispatch(setPassManagerLastUpdated(0));
+    },
+    changeImage(lastUpdate){
+      const time=new Date().getTime();
+      if(time-lastUpdate>10000){
+        const actionList={
+          isFetching:setPassManagerFetching,
+          lastUpdated:setPassManagerLastUpdated
+        };
+        const sendParam={
+          baseUrl:window.baseUrl
+        };
+        dispatch(setPassErrorShow(false));
+        const success=(data)=>{
+          dispatch(setImageUrl(data.captcha));
+        };
+        const fail=(err)=>{
           dispatch(setErrorPos("validate"));
+          dispatch(setPassErrorPointMsg("网络异常，请稍后重试！"));
           dispatch(setPassErrorShow(true));
-        }
-      };
-      const fail=(err)=>{
-        dispatch(setErrorPos("validate"));
-        dispatch(setPassErrorPointMsg("网络异常，请稍后重试！"));
-        dispatch(setPassErrorShow(true));
-      };
-      alert("更换成功");
-      //Util.sendRequest({method:"POST",url:apiUrl.search,urlParam:sendParam,data:{searchValue:searchValue},actionList,success,fail});
+        };
+        Util.sendRequest({method:"GET",url:apiUrl.captcha,urlParam:sendParam,data:{},actionList,success,fail});
+      }else{
+        alert("您刷新太频繁，请稍后重试！");
+      }
     },
     submit(event,oldPass,newPass,ensurePass,validateCode){
       event.preventDefault();
@@ -166,7 +168,7 @@ const mapDispatchToProps = (dispatch) => {
       const actionList={
       };
       const sendParam={
-        baseUrl:""
+        baseUrl:window.baseUrl
       };
       dispatch(setPassErrorShow(false));
       const success=(data)=>{
@@ -185,8 +187,7 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(setPassErrorPointMsg("网络异常，请稍后重试！"));
         dispatch(setPassErrorShow(true));
       };
-      //Util.sendRequest({method:"POST",url:apiUrl.login,urlParam:sendParam,data,actionList,success,fail});
-
+      Util.sendRequest({method:"POST",url:apiUrl.setPaymentPassword,urlParam:sendParam,data,actionList,success,fail});
     },
   }
 };

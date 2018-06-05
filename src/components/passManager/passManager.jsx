@@ -17,13 +17,19 @@ class PassManager extends React.Component {
   }
 
   componentDidMount() {
-    const {changeNavList, navList} = this.props;
+    const {changeNavList, navList, lastUpdate, changeImage} = this.props;
     changeNavList(navList);
     $('#collapseOne').collapse('show');
+    changeImage(lastUpdate);
   }
+  componentWillUnmount(){
+    //卸载页面图片的上一次更新时间
+    const {unmountLastTime} =this.props;
+    unmountLastTime();
 
+  }
   render() {
-    const {oldPass,newPass,ensurePass,validateCode,pointMsg,errorPos,showError,imgUrl,operaOldPass,operaNewPass,operaEnsurePass,operaValidate,changeImage,submit} = this.props;
+    const {oldPass,newPass,ensurePass,validateCode,pointMsg,errorPos,lastUpdate,showError,imgUrl,operaOldPass,operaNewPass,operaEnsurePass,operaValidate,changeImage,submit} = this.props;
     return (
       <div className="col-lg-12 col-md-12 index-content clearfix pl-xl-0 pr-xl-0">
         <UserTitleComponent></UserTitleComponent>
@@ -57,7 +63,7 @@ class PassManager extends React.Component {
                       <span className="tipss">图形验证码</span>
                       <div className="border-block">
                         <input type="text" className="payInp" name="captcha" onChange={(event)=>{operaValidate(event)}} />
-                        <span className="input-group-addon btn btn-get-validate cap" onClick={()=>{changeImage()}}>
+                        <span className="input-group-addon btn btn-get-validate cap" onClick={()=>{changeImage(lastUpdate)}}>
                           <img src={imgUrl} alt="" height="20" width="70" />
                         </span>
                       </div>

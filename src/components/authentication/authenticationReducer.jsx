@@ -1,7 +1,7 @@
 /*
  *companyInfo reducer功能 主要用来变更数据
  * */
-import {SETCOMPANYNAME,SETBUSINESSLICENSE,SETBANKCARDNUMBER,SETBANKCODE,SETAUTHENTICATIONPOINTMSG,SETBANKLIST,SETERRORMSGSTATUS} from "./authenticationAction.jsx"
+import {SETCOMPANYNAME,SETBUSINESSLICENSE,SETBANKCARDNUMBER,SETBANKCODE,SETAUTHENTICATIONPOINTMSG,SETBANKLIST,SETERRORMSGSTATUS,UPDATECORPORATION} from "./authenticationAction.jsx"
 
 let initState={
   pointMsg:"",
@@ -10,6 +10,7 @@ let initState={
   bankCardNumber:"",
   bankCode:"",
   bankList:{},
+  corporation:{},
   showErrorMsg:false
 };
 
@@ -36,6 +37,9 @@ const AuthenticationReducer=(state=initState,action)=>{
       return newValue;
     case SETERRORMSGSTATUS:
       Object.assign(newValue,{showErrorMsg:action.status});
+      return newValue;
+    case UPDATECORPORATION:
+      Object.assign(newValue,{corporation:action.data});
       return newValue;
     default:
       return newValue;

@@ -85,9 +85,9 @@ class Index extends React.Component{
           <div className="modal fade hide" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-width">
               <div className="modal-content" onClick={()=>{onHidePoint()}}>
-                <img src={user.lccbAuth==-1?"/static/images/true-name.png":(user.lccbAuth==0?"/static/images/activate-name.png":"")} />
+                <img src={user.lccbUserId==-1?"/static/images/true-name.png":(user.lccbUserId==0?"/static/images/activate-name.png":"")} />
                 <Link to="/authentication" onClick={(event)=>{try{event.stopPropagation()}catch(e){event.cancelBubble=true;}}}>
-                  <img src={user.lccbAuth==-1?"/static/images/rightnow.png":(user.lccbAuth==0?"/static/images/rightnow1.png":"")} />
+                  <img src={user.lccbUserId==-1?"/static/images/rightnow.png":(user.lccbUserId==0?"/static/images/rightnow1.png":"")} />
                 </Link>
               </div>
             </div>

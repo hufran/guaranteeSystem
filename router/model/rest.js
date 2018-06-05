@@ -16,7 +16,7 @@ class rest{
     let {url,urlParam,method="POST"}=optionValue;
     url=url||"{baseUrl}"+req.originalUrl;
 
-    let param=req.body;
+    let param=method==="POST"?req.body:req.query;
     let options={
       url:url,
       urlParam:urlParam||{baseUrl:urlHandle.baseUrl},

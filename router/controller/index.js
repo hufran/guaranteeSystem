@@ -76,6 +76,28 @@ router.get("/lccb/banks",oauthAuthentication.pass(),function(req,res,next){
   rest.sendRequest(req,res,next,{url:apiUrl.banks,urlParam:{baseUrl:urlHandle.baseUrl},method:"GET"});
 });
 
+//激活
+router.post("/lccbweb/userActivate/:userId",oauthAuthentication.user(),function(req,res,next){
+  rest.sendRequest(req,res,next,{url:apiUrl.userActivate,urlParam:{baseUrl:urlHandle.baseUrl,userId:req.params.userId}});
+});
+
+//授权
+router.post("/lccbweb/userAuth/:userId",oauthAuthentication.user(),function(req,res,next){
+  rest.sendRequest(req,res,next,{url:apiUrl.userAuth,urlParam:{baseUrl:urlHandle.baseUrl,userId:req.params.userId}});
+});
+
+//取消授权
+router.post("/lccbweb/userAuthCancel/:userId",oauthAuthentication.user(),function(req,res,next){
+  rest.sendRequest(req,res,next,{url:apiUrl.userAuthCancel,urlParam:{baseUrl:urlHandle.baseUrl,userId:req.params.userId}});
+});
+
+//获取重置密码验证码
+router.get("/register/captcha",function(req,res,next){
+  var timestamp=new Date().getTime();
+  rest.sendRequest(req,res,next,{url:apiUrl.captcha,urlParam:{baseUrl:extraUrl,timestamp:timestamp},method:"GET"});
+});
+
+
 router.post("/userInfo/save",oauthAuthentication.pass(),function(req,res,next){
   rest.sendRequest(req,res,next,{url:apiUrl.register},function(req,res,next,resValue){
     if(resValue.status==0){

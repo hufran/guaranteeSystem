@@ -931,7 +931,8 @@ ul li {
 
 .modify-password-wrapper .row .payInp {
   width: 200px;
-  height: 30px;
+  height: 36px;
+  line-height:36px;
   border-radius: 5px;
   text-indent: 10px;
   border: 1px solid #ccc;

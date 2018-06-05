@@ -19,7 +19,11 @@ let url={
     "recharge":'{baseUrl}/api/v2/lccbweb/deposit/{userId}',//POST 廊坊银行 web页面快捷充值
     "corporation":"{baseUrl}/api/v2/corporation/{userId}",//GET 获取企业基本信息
     "banks":"{baseUrl}/api/v2/lccb/banks",//GET 获取银行卡列表
-
+    "userActivate":"{baseUrl}/api/v2/lccbweb/userActivate/{userId}",//POST 激活
+    "userAuth":"{baseUrl}/api/v2/lccbweb/userAuth/{userId}",//POST 授权
+    "userAuthCancel":"{baseUrl}/api/v2/lccbweb/userAuthCancel/{userId}",//POST 取消授权
+    "setPaymentPassword":"{baseUrl}/api/v2/user/{userId}/setPaymentPassword",//POST 重置用户密码
+    "captcha":"{baseUrl}/api/v2/register/captcha?timestamp={timestamp}",//GET 重置用户密码
 
   }
 

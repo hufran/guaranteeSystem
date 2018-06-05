@@ -1,12 +1,12 @@
 import {connect} from "react-redux";
 import {changeNavStatus} from "../leftNav/leftNavAction.jsx";
 import Authentication from "./authentication.jsx";
-import {setCompanyName,setBusinessLicense,setBankCardNumber,setBankCode,setAuthenticationPointMsg,setErrorStatus,authenticationIsFetching,authenticationLastUpdate,setBankList} from "./authenticationAction.jsx"
+import {setCompanyName,setBusinessLicense,setBankCardNumber,setBankCode,setAuthenticationPointMsg,setErrorStatus,authenticationIsFetching,authenticationLastUpdate,setBankList,updateCorporation} from "./authenticationAction.jsx"
 import {loginIsFetching,loginLastUpdata,updateLccb} from "../login/loginAction.jsx";
 import $ from "jquery"
 import bootstrap from "bootstrap"
 import Util from "../../assets/js/util.jsx";
-import {RegexValue} from "../../assets/js/regex.jsx"
+import {RegexValue,UPDATEDATAMINTIME} from "../../assets/js/regex.jsx"
 import UrlList from "../../../router/util/urlHandler";
 
 
@@ -41,6 +41,11 @@ const getBankList=(authentication)=>{
   return bankList;
 };
 
+const getCorporation=(corporation)=>{
+  const corporationContent={...corporation};
+  return corporationContent;
+};
+
 const mapStateToProps=(store)=>{
   console.log("state:",store);
   return {
@@ -53,7 +58,8 @@ const mapStateToProps=(store)=>{
     bankCode:store.AuthenticationReducer.bankCode,
     pointMsg:store.AuthenticationReducer.pointMsg,
     bankList:getBankList(store.AuthenticationReducer),
-    showErrorMsg:store.AuthenticationReducer.showErrorMsg
+    showErrorMsg:store.AuthenticationReducer.showErrorMsg,
+    corporation:getCorporation(store.AuthenticationReducer.corporation)
   }
 };
 
@@ -112,6 +118,7 @@ const mapDispatchToProps = (dispatch) => {
       }
     },
     getBankValue({target,stopPropagation,cancelBubble}){
+      console.log("value:",target.value);
       try {
         stopPropagation();
       }catch(e){
@@ -119,9 +126,23 @@ const mapDispatchToProps = (dispatch) => {
       }
       dispatch(setBankCode(target.value));
     },
+    queryCorporation:(user)=>{
+      const sendParam={baseUrl:window.baseUrl,userId:user.id};
+      const data={};
+      const actionList={
+        isFetching:authenticationIsFetching,
+        lastUpdated:authenticationLastUpdate
+      };
+      const success=(data)=>{
+        dispatch(updateCorporation(data));
+      };
+      const fail=(err)=>{
+      };
+      Util.sendRequest({method:"POST",url:apiUrl.corporation,urlParam:sendParam,data,actionList,success,fail});
+    },
     queryLccbId:(lastUpdateTime,user)=>{
       const time=new Date().getTime();
-      if(time-lastUpdateTime>UPDATEDATAMINTIME&&user&&user.id){
+      if(time-lastUpdateTime>UPDATEDATAMINTIME){
         const sendParam={baseUrl:window.baseUrl,userId:user.id};
         const data={};
         const actionList={
@@ -129,10 +150,11 @@ const mapDispatchToProps = (dispatch) => {
           lastUpdated:loginLastUpdata
         };
         const success=(data)=>{
-          dispatch(setBankList(data.data));
+          if(data.status==0) {
+            dispatch(updateLccb(data.data.lccbId, data.data.lccbAuth));
+          }
         };
         const fail=(err)=>{
-          dispatch();
         };
         Util.sendRequest({method:"POST",url:apiUrl.lccbId,urlParam:sendParam,data,actionList,success,fail});
       }
@@ -146,15 +168,13 @@ const mapDispatchToProps = (dispatch) => {
         lastUpdated:null
       };
       const success=(data)=>{
-        if(data.status==0){
-          dispatch(updateLccb(data.data.lccbId,data.data.lccbAuth));
-        }
+        dispatch(setBankList(data));
       };
       const fail=(err)=>{
         dispatch(setAuthenticationPointMsg("获取银行列表操作异常，请稍后重试!"));
         modal.modal("show");
       };
-      Util.sendRequest({method:"POST",url:apiUrl.banks,urlParam:sendParam,data,actionList,success,fail});
+      Util.sendRequest({method:"GET",url:apiUrl.banks,urlParam:sendParam,data,actionList,success,fail});
     },
     submit({target,stopPropagation,cancelBubble},user,name,license,card,bankCode){
       try {
@@ -162,6 +182,7 @@ const mapDispatchToProps = (dispatch) => {
       }catch(e){
         cancelBubble=true;
       }
+      const successUrl=window.location.href;
       if(!user.lccbUserId||user.lccbUserId==-1){
         //开通存管
         let result=RegexValue.checkCompanyName(name);
@@ -176,7 +197,7 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(setErrorStatus(true));
           return;
         }
-        result=RegexValue.checkBankAccount(card);
+        /*result=RegexValue.checkBankAccount(card);
         if(!result.flag){
           dispatch(setAuthenticationPointMsg(errorContent[result.errType]));
           dispatch(setErrorStatus(true));
@@ -186,7 +207,7 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(setAuthenticationPointMsg(errorContent["bankCodeRequire"]));
           dispatch(setErrorStatus(true));
           return;
-        }
+        }*/
         if(!user.id){
           dispatch(setAuthenticationPointMsg(errorContent["userIdRequire"]));
           dispatch(setErrorStatus(true));
@@ -196,11 +217,11 @@ const mapDispatchToProps = (dispatch) => {
         console.log("user:",user);
         console.log("name:"+name+" license:"+license," card:"+card+" bankCode:"+bankCode);
         const actionList={};
-        const sendParam={baseUrl:window.baseUrl};
+        const sendParam={baseUrl:window.baseUrl,userId:user.id};
         const success=(data)=>{
           if(data.status==0){
-            window.document.forms[0].action=data.data;
-            window.document.forms[0].submit();
+            document.forms[0].action=data.data;
+            document.forms[0].submit();
             dispatch(setErrorStatus(false));
           }else{
             dispatch(setAuthenticationPointMsg(data.msg));
@@ -211,17 +232,15 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(setAuthenticationPointMsg("网络异常，请稍后重试！"));
           dispatch(setErrorStatus(true));
         };
-        Util.sendRequest({method:"POST",url:apiUrl.openAccount,urlParam:sendParam,data:{transtype:searchValue},actionList,success,fail});
+        Util.sendRequest({method:"POST",url:apiUrl.openAccount,urlParam:sendParam,data:{name:name,idNumber:license,successUrl:successUrl},actionList,success,fail});
       }else if(user.lccbUserId==0){
         //激活流程
         const actionList={};
-        const sendParam={
-          baseUrl:""
-        };
+        const sendParam={baseUrl:window.baseUrl,userId:user.id};
         const success=(data)=>{
           if(data.status==0){
-            window.document.forms[0].action=data.data;
-            window.document.forms[0].submit();
+            document.forms[0].action=data.data;
+            document.forms[0].submit();
             dispatch(setErrorStatus(false));
           }else{
             dispatch(setAuthenticationPointMsg(data.msg));
@@ -232,19 +251,24 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(setAuthenticationPointMsg("网络异常，请稍后重试！"));
           dispatch(setErrorStatus(true));
         };
-        //Util.sendRequest({method:"POST",url:apiUrl.open,urlParam:sendParam,data:{searchValue:searchValue},actionList,success,fail});
+        Util.sendRequest({method:"POST",url:apiUrl.userActivate,urlParam:sendParam,data:{successUrl:successUrl},actionList,success,fail});
       }else{
         //已经开通银行存管
-        if(user.lccbAuth){
+        const modal=$("#myModal");
+        dispatch(setAuthenticationPointMsg("抱歉，企业用户不支持该操作！"));
+        modal.modal("show");
+        return;
+        if(user.lccbAuth==0){
           //授权
           const actionList={};
           const sendParam={
-            baseUrl:""
+            baseUrl:window.baseUrl,
+            userId:user.id
           };
           const success=(data)=>{
             if(data.status==0){
-              window.document.forms[0].action=data.data;
-              window.document.forms[0].submit();
+              document.forms[0].action=data.data;
+              document.forms[0].submit();
               dispatch(setErrorStatus(false));
             }else{
               dispatch(setAuthenticationPointMsg(data.msg));
@@ -255,13 +279,14 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(setAuthenticationPointMsg("网络异常，请稍后重试！"));
             dispatch(setErrorStatus(true));
           };
-          //Util.sendRequest({method:"POST",url:apiUrl.open,urlParam:sendParam,data:{searchValue:searchValue},actionList,success,fail});
+          Util.sendRequest({method:"POST",url:apiUrl.userAuth,urlParam:sendParam,data:{successUrl:successUrl},actionList,success,fail});
 
-        }else{
+        }else if(user.lccbAuth==1){
           //未授权
           const actionList={};
           const sendParam={
-            baseUrl:""
+            baseUrl:window.baseUrl,
+            userId:user.id
           };
           const success=(data)=>{
             if(data.status==0){
@@ -272,12 +297,12 @@ const mapDispatchToProps = (dispatch) => {
               dispatch(setAuthenticationPointMsg(data.msg));
               dispatch(setErrorStatus(true));
             }
-          };
+          };console.log("1111111");
           const fail=(err)=>{
             dispatch(setAuthenticationPointMsg("网络异常，请稍后重试！"));
             dispatch(setErrorStatus(true));
           };
-          //Util.sendRequest({method:"POST",url:apiUrl.open,urlParam:sendParam,data:{searchValue:searchValue},actionList,success,fail});
+          Util.sendRequest({method:"POST",url:apiUrl.userAuthCancel,urlParam:sendParam,data:{successUrl:successUrl},actionList,success,fail});
         }
       }
     }
