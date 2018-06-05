@@ -46,7 +46,7 @@ const getModalValue=({modal})=>{
 };
 
 const mapStateToProps=(state)=>{
-  console.log("state：",state);
+  // console.log("state：",state);
   return{
     loginStatus:getLoginStatus(state.LoginReducer),
     errorContent:getErrorContent(state.LoginReducer),

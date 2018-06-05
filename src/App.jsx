@@ -22,24 +22,7 @@ class App extends React.Component{
     super(props);
 
   }
-  componentWillMount(){
-    const sendParam={baseUrl:window.location.origin};
-    const data={};
-    const actionList={
-      isFetching:loginIsFetching,
-      lastUpdated:loginLastUpdata
-    };
-    const success=(data)=>{
-      state.dispatch(loginRequestSuccess(data.status,data.msg,data));
-      if(data.status==0){
-        state.dispatch(changeLoginStatus(true));
-      }else{
-        state.dispatch(changeLoginStatus(false));
-      }
-    };
-    const fail=(err)=>{};
-    Util.sendRequest({method:"POST",url:"{baseUrl}/api/v2/getSessionInfo",urlParam:sendParam,data,actionList,success,fail});
-  }
+
   render(){
     return (
       <div className="main">

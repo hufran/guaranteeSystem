@@ -2,6 +2,7 @@
  *给组件分配数据以及方法
  * */
 import {connect} from "react-redux";
+import {withRouter} from 'react-router-dom'
 import {changeLoginStatus,loginRequestSuccess,setUserName,setPass,setRemeber} from "../login/loginAction.jsx";
 import Head from "./head.jsx"
 
@@ -37,6 +38,6 @@ const mapDispatchToProps=(dispatch)=>{
 
 
 
-const HeadComponent=connect(mapStateToProps,mapDispatchToProps)(Head);
+const HeadComponent=withRouter(connect(mapStateToProps,mapDispatchToProps)(Head));
 
 export default HeadComponent;

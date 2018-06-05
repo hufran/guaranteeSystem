@@ -19,6 +19,7 @@ const getUserInfo=({point:{loginStatus},user})=>{
 };
 
 const mapStateToProps=(store)=>{
+  console.log(store.LoginReducer)
   return{
     navList:getNavList(store.LeftNavReducer),
     user:getUserInfo(store.LoginReducer),
@@ -45,14 +46,14 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(changeNavStatus(newState));
     },
     setLevel(user){
+      let num = 0
       if(user.mobile&&user.mobile.length==11){
-        dispatch(setDataIntegrity(50));
-      }else if(user.lccbUserId&&user.lccbUserId!=0&&user.lccbUserId!=-1){
-        dispatch(setDataIntegrity(100));
-      }else{
-        dispatch(setDataIntegrity(0));
+        num+=50
       }
-
+      if(user.lccbUserId&&user.lccbUserId!=0&&user.lccbUserId!=-1){
+        num+=50
+      }
+      dispatch(setDataIntegrity(num));
     },
   }
 };

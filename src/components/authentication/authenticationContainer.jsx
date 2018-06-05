@@ -47,7 +47,7 @@ const getCorporation=(corporation)=>{
 };
 
 const mapStateToProps=(store)=>{
-  console.log("state:",store);
+  // console.log("state:",store);
   return {
     navList:getNavList(store.LeftNavReducer),
     user:getUserInfo(store.LoginReducer),

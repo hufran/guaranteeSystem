@@ -68,7 +68,7 @@ const mapDispatchToProps = (dispatch) => {
         };
         Util.sendRequest({method:"POST",url:apiUrl.lccbId,urlParam:sendParam,data,actionList,success,fail});
       }else{
-        console.log("user.lccbAuth:",user.lccbAuth);
+        // console.log("user.lccbAuth:",user.lccbAuth);
         if(user.lccbUserId==-1||user.lccbUserId==0||!user.lccbUserId){
           modal.modal("show");
         }
